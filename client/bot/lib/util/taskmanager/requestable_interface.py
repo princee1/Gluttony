@@ -1,0 +1,3 @@
+
+class Requestable:
+    pass
