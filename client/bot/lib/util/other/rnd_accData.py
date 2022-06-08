@@ -9,7 +9,7 @@ max_lenght_pass=15
 special_char="!@#$%"
 
 class BirthFormat(Enum):
-    FOOTSITE=1
+    FOOTSITE=1 
     ADIDAS=2
     SHOPIFY=3
     pass
