@@ -12,3 +12,4 @@ def fileCreator(filename):
 
 def initFile(filename,buffer):
     pass
+

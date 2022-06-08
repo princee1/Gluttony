@@ -79,6 +79,8 @@ def get_datadome(proxie, user):
     return reponse.json()['cookie'].split(";")[0].split("=")[1]
 
 
+
+
 def parse_error(response: Response):
     val = map_statusCode_error.get(response.status_code)
 
@@ -118,7 +120,7 @@ class RequestCS:
             'x-api-lang': 'en-CA',
             # 'accept-encoding': 'gzip, deflate, br',
             # 'accept-language': 'en-CA,en;q=0.9',
-            'referer': 'https://www.champssports.ca/',
+            'referer': 'https://www.champssports.ca',
             'origin': 'https://www.champssports.ca',
             'x-fl-request-id': hd.request_id(),
             'user-agent': self.useragents
