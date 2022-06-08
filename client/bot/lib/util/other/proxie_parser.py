@@ -1,4 +1,4 @@
-from text_interface import file_to_list,proxy as file_proxy
+from util.fileInterface.text_interface import file_to_list,proxy as file_proxy
 from requests.auth import HTTPProxyAuth
 from random import choice
 
@@ -20,6 +20,11 @@ class Proxy:
         self.port=port
         self.user=user
         self.passw=passw
+        
+    def __init__(self,ip,port,user,passw,auth:tuple) -> None:
+        self.__init__(self,ip,port,user,passw)
+        self.authUser,self.authPass=auth
+        
     
     def proxy(self):
         return  {
@@ -28,8 +33,8 @@ class Proxy:
             }
         
         
-    def get_auth(self):
-        return HTTPProxyAuth(username=self.user,password=self.passw)
+    def get_auth(self,):
+        return HTTPProxyAuth(username=self.authUser,password=self.authPass)
     def get_proxy(self)->dict:
         return {
             #'https':f"https://{self.ip}:{self.port}",
