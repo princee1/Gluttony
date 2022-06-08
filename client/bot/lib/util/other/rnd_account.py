@@ -1,5 +1,5 @@
-from rnd_pass_birth import gen_birthday, gen_password, gen_number
-from text_interface import rnd_fname, rnd_lname, file_to_list, domain, names
+from rnd_accData import gen_birthday, gen_password, gen_number , BirthFormat
+from util.fileInterface.text_interface import rnd_fname, rnd_lname, file_to_list, domain, names
 from random import choice
 
 rnd_lastName = file_to_list(rnd_lname)
@@ -10,6 +10,11 @@ dom = file_to_list(domain)
 
 
 def gen_email():
+    """
+    It takes a random first name, a random last name, a random number, and a random domain, and
+    concatenates them together to form an email address
+    :return: A string
+    """
     return choice_toStr(rnd_firstName).__add__(
         choice_toStr(rnd_lastName)).__add__(gen_number()).__add__("@").__add__(choice_toStr(dom))
 
@@ -24,6 +29,12 @@ def gen_list_account(amount: int, full_name: tuple):
 
 
 def choice_toStr(list):
+    """
+    It takes a list of strings and returns a random string from that list
+    
+    :param list: The list of items to choose from
+    :return: A random element from the list.
+    """
     return str(choice(list))
 
 
@@ -37,26 +48,19 @@ def gen_all_account(amount: int):
     return list
 
 
+
 class Account:
 
-    def __init__(self, firstName, lastName):
+    def __init__(self, firstName, lastName,birthdatType:BirthFormat):
         self.firstName: str = firstName
         self.lastName: str = lastName
         self.email = gen_email()
         self.password = gen_password()
-        self.birthday = gen_birthday()
+        self.birthday = gen_birthday(birthdatType)
 
     def to_json(self):
-        return {
-            "optIn": False,
-            "firstName": self.firstName,
-            "lastName": self.lastName,
-            "uid": self.email,
-            "password": self.password,
-            "birthday": self.birthday,
-            "wantToBeVip": False
-        }
-    
+        pass
+
     def writeInFile(self):
         return (self.firstName,self.lastName,self.email,self.password)
 
