@@ -70,10 +70,5 @@ def save():
     with open(properties, 'w') as configfile:
         config.write(configfile)
 
-def to_path(file: str):
-    return f"data\\{file}"
-
-def saveBackUp(user,type):
-    pass
 
 
