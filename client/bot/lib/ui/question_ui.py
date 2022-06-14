@@ -1,20 +1,21 @@
 #from __future__ import print_function, unicode_literals
 from prompt_toolkit.styles.base import Style
-from whaaaaat import prompt, style_from_dict,Token,Separator
+from whaaaaat import prompt, style_from_dict, Token, Separator
 from print_cli import print_principalOption
 
-#TODO sytle builder
+# TODO sytle builder
 
 style = style_from_dict({
     Token.Separator: '#6C6C6C',
     Token.QuestionMark: '#FF9D00 bold',
     Token.Selected: '#001aff',  # default
-    #Token.Selected: '#5F819D',
+    # Token.Selected: '#5F819D',
     Token.Pointer: '#FF9D00 bold',
     Token.Instruction: '',  # default
     Token.Answer: '#5F819D bold',
     Token.Question: '',
 })
+
 
 def selectOption(list: list, message) -> int:
     question = {
@@ -45,7 +46,7 @@ def simpleQuestion(message: str):
         {'type': 'input',
          'name': 'value',
          'message': message,
-         #'validator':lambda x:str(x)
+         # 'validator':lambda x:str(x)
          }
     ]
     return prompt(question).get('value')
@@ -71,7 +72,19 @@ def enterPassWord(message):
     }
     ]
     return prompt(question).get('value')
-    
+
+
+def listOption(message, list) -> int:
+    question = {
+        'type': 'raw',
+        'name': 'option',
+        'message': message,
+        'default': 1,
+        'choices': list
+
+    }
+    return list.index(prompt(question).get('option'))
+
 
 def addSeparator(list, index):
     pass
