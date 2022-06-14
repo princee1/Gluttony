@@ -32,6 +32,7 @@ def writeInFile(buffer: str,inputMode):
         x = x.strip()
         writer.write(x+"\n")
     writer.close()
+    print("Writed in the file")
 
 
 def writeProxyFromClipBoard(inputmode):
