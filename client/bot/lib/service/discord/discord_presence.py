@@ -1,9 +1,9 @@
 from pypresence import *
 import time,discord
-##from print_cli import success,error,desc
+from print_cli import success,error,desc
 import threading as td
 
-#TODO Implemeter le discord prescence
+#TEST  le discord prescence
 
 APPLICATION_ID='929427634373394452'
 MAX_RETRY=5
@@ -11,8 +11,7 @@ user_discordRP={"state":"Allo","details":"Allo","small-text":"allo","large-text"
 presence=Presence(APPLICATION_ID)
 
 def connect_RP():
-   ## desc("Connecting to discord...")
-    print("Connecting to discord...")
+    desc("Connecting to discord...")
     count=1
     connected=False
     while (count!=MAX_RETRY):
@@ -20,16 +19,16 @@ def connect_RP():
             time.sleep(500)
             presence.connect()
             connected= True
-            ##success("\n * Discord Rich Presence Connected ! *\n")
+            success("\n * Discord Rich Presence Connected ! *\n")
         except ValueError:
-           ## error("Aborting...")
+            error("Aborting...")
             count= 5
         except KeyboardInterrupt:
-           ## error("Aborting...")
+            error("Aborting...")
             count =5
         except:
-           ## error("* Error while connecting to discord presence *")
-            ##desc(f"Trying again{count}/{MAX_RETRY}")
+            error("* Error while connecting to discord presence *")
+            desc(f"Trying again{count}/{MAX_RETRY}")
             count+=1
         finally:
             pass
@@ -47,7 +46,7 @@ def update_RP():
                         large_text=user_discordRP["large_text"],
                         small_text=user_discordRP["small_text"])
         except:
-           ## error("* Error while updating presence*\nClosing the connection...")
+            error("* Error while updating presence*\nClosing the connection...")
             presence.close()
             pass
 
