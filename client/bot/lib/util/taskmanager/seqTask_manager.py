@@ -60,13 +60,13 @@ def stats():
     except:
         return
     print('')
-    print_desc("====================================================")
-    print_status("All Task Are Done")
-    print_succes(f"Succes: {succes}")
-    print_error(f"Failed: {failed}")
-    print_desc(f"Total Task: {total} - ",False)
-    print_desc(f"Ratio : {strRatio} %" )
-    print_desc("====================================================")
+    desc("====================================================")
+    status("All Task Are Done")
+    success(f"Succes: {succes}")
+    error(f"Failed: {failed}")
+    desc(f"Total Task: {total} - ",False)
+    desc(f"Ratio : {strRatio} %" )
+    desc("====================================================")
     succes.toNull()
     failed.toNull()
     
@@ -83,17 +83,17 @@ class TaskSeq:
         
         if not status:
             failed.increment()
-            print_error(message)
+            error(message)
             if status==False:
                 return
         
-        print_status(message) 
+        status(message) 
         status,message=self.request.succes_method()
         if status:
-            print_succes(message)
+            success(message)
             succes.increment()
         else:
-            print_error(message)
+            error(message)
             failed.increment()
         #except:
             #pass
