@@ -2,6 +2,7 @@ from util.fileInterface.text_interface import file_to_list,proxy as file_proxy
 from requests.auth import HTTPProxyAuth
 from random import choice
 
+@DeprecationWarning
 def parseProxy(p:str):
     """
     It takes a string of the form "ip:port:user:password" and returns a Proxy object with the
@@ -21,7 +22,7 @@ def load_proxy():
     """
     list=[]
     for proxy in file_to_list(file_proxy):
-        list.append(parseProxy(proxy))
+        list.append(Proxy(proxy))
     
     return list
 
@@ -38,6 +39,16 @@ class Proxy:
     def __init__(self,ip,port,user,passw,auth:tuple) -> None:
         self.__init__(self,ip,port,user,passw)
         self.authUser,self.authPass=auth
+        
+    def __init__(self,proxyText:str) -> None:
+        ip,port,user,passw=proxyText.split(":")
+        self.__init__(self,ip,port,user,passw)
+        pass
+    
+    def __init__(self,proxyText,auth:tuple) -> None:
+        ip,port,user,passw=proxyText.split(":")
+        self.__init__(self,ip,port,user,passw,auth)
+        pass
         
     def proxy(self):
         return  {
