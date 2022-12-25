@@ -3,7 +3,7 @@ from text_interface import file_to_list, write_list, email as e
 from urllib.parse import unquote
 from print_cli import*
 from json_interface import e_mail,password
-from print_cli import print_error,print_status,print_succes
+from print_cli import error,status,success
 
 
 
@@ -16,16 +16,16 @@ def grab_activationToken():
     var = imaplib.IMAP4_SSL(host=gmail_host)
     status,message=var.login(user=e_mail, password=password)
     if status=='OK':
-        print_succes(str(message[0]))
+        success(str(message[0]))
     else :
-        print_error(str(message[0]))
+        error(str(message[0]))
         return
     
     var.select("INBOX")
     _, result = var.search(None,'(FROM "Champs Sports")',
                            '(SUBJECT "Finish Activating Your Account")', 'UNSEEN')
     data = result[0].split()
-    print_status(f"Total Messages from Champs Sports:  {len(data)}")
+    status(f"Total Messages from Champs Sports:  {len(data)}")
 
     list_link = []
 
