@@ -1,14 +1,13 @@
 import os
 from configparser import DEFAULTSECT, ConfigParser
-from print_cli import print_succes,print_error,print_info
+from print_cli import success,error,print_info
+
 properties="Properties.properties"
 config=ConfigParser(comment_prefixes='#',delimiters="=")
 config.read(properties)
 path_section="User Path"
 defaultSec="DEFAULT USER NAME"
 defaultPath=config[defaultSec]["name"]
-
-
 
 
 #TODO Finir d'implementer le module 
@@ -37,8 +36,7 @@ def setDefaultValue(value:str):
         config["DEFAULT USER NAME"]["name"]=value
     
     else:
-        print_error("Value not found in the file...")
-    
+        error("Value not found in the file...")
     save()
     pass
 
@@ -53,11 +51,14 @@ def setValue(option,value):
     save()
     pass
 
+@DeprecationWarning
 def getAllUser():
+    raise DeprecationWarning
     return config.options(path_section)
 
+@DeprecationWarning
 def printAllUser():
-    
+    raise DeprecationWarning
     for x in getAllUser():
         print(config.get(path_section,x))
     
