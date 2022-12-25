@@ -1,24 +1,24 @@
 from clint.textui import indent, colored, puts, puts_err
 
-def print_error(value,newLine:bool=True):
+def error(value,newLine:bool=True):
     '''
     Color: Red
     '''
     puts_err(colored.red(string=value),newLine)
 
-def print_succes(value,newLine:bool=True):
+def success(value,newLine:bool=True):
     '''
     Color: Green
     '''
     puts(colored.green(string=value),newLine)
 
-def print_desc(value,newLine:bool=True):
+def desc(value,newLine:bool=True):
     '''
     Color: White
     '''
     puts(colored.white(string=value),newLine)
 
-def print_status(value,newLine:bool=True):
+def status(value,newLine:bool=True):
     '''
     Color: Cyan
     '''
