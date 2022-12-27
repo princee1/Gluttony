@@ -1,34 +1,43 @@
-from json import loads
-from text_interface import file_to_list
+import json5 as js
 
-try: #FIXME Ne marche pas
-    settings="Settings.json"
-    e_mail="mxdzz.kook64@gmail.com"
-    password="oukuncmxbbnhwfcd"
-    delay=2
-    #js = loads(s=file_to_list(settings)[0])[0]
-    #e_mail = js["Gmail"]
-    #password = js["Pass"]
-    #delay=js["delay"]
+
+
+def loadJson(file):
+    try:
+        with open(file, "r") as fd:
+            return js.load(fd, "utf-8")
+    except:
+        return None
     
+def writeJson(json,file):
+    try:
+        with open(file, "w") as fd:
+            js.dump(json,fd)
+    except:
+        pass
     
+class Settings():
+    def __init__(self,module) -> None:
+        self.modulePath=module
+        self.settings:dict=loadJson(module)
+        
+    def setValue(self,key,data):
+        self.settings[key]=data
+        self.save()
+        pass   
     
-except:
+    def getValue(self,key):
+        return self.settings[key]
+
+    def save(self):
+        writeJson(self.settings,self.modulePath)
+        pass
+    
+    @DeprecationWarning
+    def addData(self):
+        pass
+    @DeprecationWarning
+    def deleteData(self):
+        pass
+
     pass
-
-
-#FIXME implementer quelques methodes
-
-def setValue():
-    pass   
-
-def save():
-    pass
-
-def addData():
-    pass
-
-def deleteData():
-    pass
-
-save()
