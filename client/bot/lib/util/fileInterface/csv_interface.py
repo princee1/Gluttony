@@ -2,7 +2,7 @@ import csv
 import os
 from pyexcel import sheet
 import pyexcel as pe
-from print_cli import print_error
+from print_cli import error
 
 account = "Accounts.csv"
 entries = "Entries.csv"
@@ -48,63 +48,10 @@ class CSV_Data:
         return f"{self.file_index}-{self.email}"
 
     def __eq__(self, __o: object) -> bool:
-        __o: CSV_Test
         return self.email == __o.__repr__()
 
-    def login_data(self):
-        return {
-            'uid': self.email,
-            'password': self.passw
-        }
-
-    def save(self):
-        pass
-    
-    def tokenData(self):
-        return {
-            'userid':self.email
-        }
-    
-   
     pass
 
-class CSV_Account(CSV_Data):
-
-    def __init__(self, file_index, data: list):
-        super().__init__(file_index,data)
-        self.customerID=None
-        self.cCore=None
-        self.idReady = False
-        if  not data[4]=='':
-            self.idReady = True
-            self.customerID=data[4]
-            self.cCore=data[6]    
-    def change_name(self,first, last):
-        pass
-    pass
-
-class CSV_Entries(CSV_Data):
-    def __init__(self, file_index, list: list) -> None:
-        super().__init__(file_index, list)
-        self.sku=list[4]
-        self.reserveId=list[5]
-        self.customerId=list[6]
-        self.cartId=list[7]
-    
-    def __eq__(self, __o: object) -> bool:
-        __o: CSV_Test
-        return super.__eq__(__o) and self.sku==__o.__str__()
-        
-    pass
-
-class CSV_Test(CSV_Data):
-    def __init__(self,email,sku) -> None:
-        self.email=email
-        self.sku=sku
-        
-    def __str__(self) -> str:
-        return self.sku
-        
     
 #FIXME: Tester les objet listbuilder
 
