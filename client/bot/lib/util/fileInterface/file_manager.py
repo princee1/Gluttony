@@ -10,7 +10,7 @@ ADIDAS_INDEX=1
 DATA_DIRNAME="data"
 
 MODULE_LIST=["Footsite","Adidas"]
-commondata="CommonDataFiles"
+commondata="CommonFiles"
 MODULE_FILE={
     MODULE_LIST[FOOTSITE_INDEX]:["ActivationToken.txt,Accounts.csv,Settings.json"],
     MODULE_LIST[ADIDAS_INDEX]:["Accounts.csv,Settings.json"]
@@ -95,7 +95,7 @@ def initUserBotData():
     writeFile(userLockFile,f"new-time~{hashTime}")
     os.system(command=command)
     
-    ##createDirectory(toPath(commondata))
+    createDirectory(commondata)
     createDirectory(DATA_DIRNAME)
     (createModule(dataPath().__add__(mod)) for mod in MODULE_LIST)
     
@@ -119,14 +119,16 @@ def isNewBotData():
     except:
         initUserBotData()
 
+def commonFilePath(file):
+    return f"{commondata}/{file}"
 
-def dataPath():
-    return f"{DATA_DIRNAME}/"
+def dataPath(file=""):
+    return f"{DATA_DIRNAME}/{file}"
 
-def footsitePath():
-    return f"{dataPath()}{MODULE_LIST[FOOTSITE_INDEX]}/"
+def footsitePath(file):
+    return f"{dataPath()}{MODULE_LIST[FOOTSITE_INDEX]}/{file}"
 
-def adidasPath():
-    return f"{dataPath()}{MODULE_LIST[ADIDAS_INDEX]}/"
+def adidasPath(file):
+    return f"{dataPath()}{MODULE_LIST[ADIDAS_INDEX]}/{file}"
 
 
