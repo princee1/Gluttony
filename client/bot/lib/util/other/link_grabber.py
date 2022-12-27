@@ -16,6 +16,17 @@ link_prefix = {0:"https://www.champssports.ca/user-activation.html?activationTok
 
 
 def grab_activationToken(file,fromWho,subjet,module:int):
+    """
+    It connects to the gmail account, then it extracts the mail from the sender, then it extracts the
+    link from the mail, then it writes the link in a file
+    
+    :param file: the file to write the activation token to
+    :param fromWho: the sender's email address
+    :param subjet: the subject of the email
+    :param module: int
+    :type module: int
+    :return: A list of links
+    """
     var:IMAP4_SSL =IMAP4_SSL(host=gmail_host)
     status,message=var.login(user=e_mail, password=password)
     if status=='OK':
@@ -29,6 +40,16 @@ def grab_activationToken(file,fromWho,subjet,module:int):
     write_list(file,list_link)
 
 def extractLink(var:IMAP4_SSL, data,module:int):
+    """
+    It takes a list of strings, and returns a list of strings
+    
+    :param var: IMAP4_SSL
+    :type var: IMAP4_SSL
+    :param data: list of emails
+    :param module: int
+    :type module: int
+    :return: A list of links
+    """
     list_link = []
 
     for m in data:
@@ -47,6 +68,18 @@ def extractLink(var:IMAP4_SSL, data,module:int):
     return list_link
 
 def extract_mail(var:IMAP4_SSL,fromWho:str,subject:str):
+    """
+    It takes an IMAP4_SSL object, a sender's email address, and a subject line as input, and returns a
+    list of message IDs
+    
+    :param var: IMAP4_SSL - This is the variable that contains the IMAP4_SSL object
+    :type var: IMAP4_SSL
+    :param fromWho: The email address of the sender
+    :type fromWho: str
+    :param subject: The subject of the email you want to extract
+    :type subject: str
+    :return: A list of message IDs
+    """
     var.select("INBOX")
     _, result = var.search(None,f'(FROM "{fromWho}")',
                            f'(SUBJECT "{subject}")', 'UNSEEN')
@@ -56,6 +89,12 @@ def extract_mail(var:IMAP4_SSL,fromWho:str,subject:str):
 
 
 def load_allToken(file):
+    """
+    It takes a file, reads it line by line, and creates an ActivationToken object for each line
+    
+    :param file: the file that contains the tokens
+    :return: A list of ActivationToken objects.
+    """
     list_link=[]
     for element in file_to_list(file):
         list_link.append(ActivationToken(str(element)))
@@ -63,6 +102,10 @@ def load_allToken(file):
     return list_link
 
 class ActivationToken:
+    """
+    It's a class that represents an activation token
+    
+    """
     def __init__(self, token:str) -> None:
         self.token:str = token
 
