@@ -1,4 +1,4 @@
-from util import to_path
+
 
 names = "Bulk_names.txt"
 domain = "Domains.txt"
@@ -19,7 +19,7 @@ def file_to_list(file: str):
     """
     list = []
     cpt = 0
-    reader=open(to_path(file),'r')
+    reader=open(file,'r')
     for x in reader:
         size = len(x)
         #if cpt != 0:
@@ -41,7 +41,7 @@ def write_list(file: str, data: list):
     :type data: list
     :return: None
     """
-    writer = open(to_path(file), "w")
+    writer = open(file, "w")
     for element in data:
         writer.write(str(element)+"\n")
     writer.close()
