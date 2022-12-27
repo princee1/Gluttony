@@ -1,69 +1,33 @@
 import os
-from configparser import DEFAULTSECT, ConfigParser
-from print_cli import success,error,print_info
+from configparser import DEFAULTSECT, ConfigParser,NoOptionError
+#from print_cli import success,error,print_info
 
 properties="Properties.properties"
 config=ConfigParser(comment_prefixes='#',delimiters="=")
 config.read(properties)
-path_section="User Path"
-defaultSec="DEFAULT USER NAME"
-defaultPath=config[defaultSec]["name"]
 
+USER_KEYSECTION=DEFAULTSECT
+USER_OPTIONSECTION="OPTIONS" 
 
-#TODO Finir d'implementer le module 
-
-def init(name,path):
+def getValue(option,section):
     try:
-        raise NotImplemented
-        config.add_section(defaultSec)
-        config[defaultSec][name]=path
-        save()
-    except FileNotFoundError():
-        pass
-    except:
-        pass
-    pass
+        return config.get(option=option,section=section)
+    except NoOptionError: 
+        return None
 
-def reset():
-    raise NotImplemented
-    
-    save()
-    pass
-
-def setDefaultValue(value:str):
-    list=config.options(path_section)
-    if list.__contains__(value):
-        config["DEFAULT USER NAME"]["name"]=value
-    
-    else:
-        error("Value not found in the file...")
-    save()
-    pass
-
-def addValue(option,value):
+def addValue(option,value,section):
     value={option:value}
-    config.read_dict({path_section:value})
+    config.read_dict({section:value})
     save()
     pass
 
-def setValue(option,value):
-    config.set(path_section,option,value)
+def setValue(option,value,section):
+    config.set(section,option,value)
     save()
     pass
 
-@DeprecationWarning
-def getAllUser():
-    raise DeprecationWarning
-    return config.options(path_section)
-
-@DeprecationWarning
-def printAllUser():
-    raise DeprecationWarning
-    for x in getAllUser():
-        print(config.get(path_section,x))
-    
-def deleteValue(option):
-    config.remove_option(path_section,option)
+def deleteValue(option,section):
+    config.remove_option(section,option)
     save()
     pass
 
@@ -71,5 +35,12 @@ def save():
     with open(properties, 'w') as configfile:
         config.write(configfile)
 
+#TODO reset user option
+@NotImplemented
+def reset():
+    raise NotImplemented
+    save()
+    pass
 
 
+USER_KEY=getValue("key",USER_KEYSECTION)
