@@ -11,11 +11,12 @@ DATA_DIRNAME="data"
 
 moduleList=["Footsite","Adidas"]
 commondata="CommonDataFiles"
+moduleFile={
+    moduleList[FOOTSITE_INDEX]:["ActivationToken.txt,Accounts.csv,Settings.json"],
+    moduleList[ADIDAS_INDEX]:["Accounts.csv,Settings.json"]
+}
 
 generalFiles=["Bulk_names.txt","Proxy.txt","Domains.txt"]
-footsitesFiles=["ActivationToken.txt,Accounts.csv,Settings.json"]    
-adidasFiles=["Accounts.csv,Settings.json"]
-
 
 def fileCreator(filename):
     """
@@ -45,7 +46,7 @@ def writeFile(filename,buffer,inputMode="w"):
     pass
 
 
-def createDirectory(moduleName):
+def createDirectory(dir):
     """
     It creates a directory.
     
@@ -53,11 +54,16 @@ def createDirectory(moduleName):
     """
     #TODO faire pour les sous-dossiers aussi 
     try:
-        os.mkdir(path=moduleName)
+        os.mkdir(path=dir)
     except:
         pass
     pass
 
+def createModule(module): 
+    createDirectory(module)
+    (fileCreator(module.__add__(file)) for file in moduleFile.get(module))
+    pass
+    
 
 def createSettingsFile():
     """
@@ -91,7 +97,7 @@ def initUserBotData():
     
     ##createDirectory(toPath(commondata))
     createDirectory(DATA_DIRNAME)
-    (createDirectory(module) for module in moduleList)
+    (createModule(dataPath().__add__(mod)) for mod in moduleList)
     
     createPropertiesFile()
     createSettingsFile()
@@ -122,6 +128,5 @@ def footsitePath():
 
 def adidasPath():
     return f"{dataPath()}{moduleList[ADIDAS_INDEX]}/"
-    
 
 
