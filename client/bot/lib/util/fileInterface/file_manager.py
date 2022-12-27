@@ -9,11 +9,11 @@ FOOTSITE_INDEX=0
 ADIDAS_INDEX=1
 DATA_DIRNAME="data"
 
-moduleList=["Footsite","Adidas"]
+MODULE_LIST=["Footsite","Adidas"]
 commondata="CommonDataFiles"
-moduleFile={
-    moduleList[FOOTSITE_INDEX]:["ActivationToken.txt,Accounts.csv,Settings.json"],
-    moduleList[ADIDAS_INDEX]:["Accounts.csv,Settings.json"]
+MODULE_FILE={
+    MODULE_LIST[FOOTSITE_INDEX]:["ActivationToken.txt,Accounts.csv,Settings.json"],
+    MODULE_LIST[ADIDAS_INDEX]:["Accounts.csv,Settings.json"]
 }
 
 generalFiles=["Bulk_names.txt","Proxy.txt","Domains.txt"]
@@ -61,7 +61,7 @@ def createDirectory(dir):
 
 def createModule(module): 
     createDirectory(module)
-    (fileCreator(module.__add__(file)) for file in moduleFile.get(module))
+    (fileCreator(module.__add__(file)) for file in MODULE_FILE.get(module))
     pass
     
 
@@ -97,7 +97,7 @@ def initUserBotData():
     
     ##createDirectory(toPath(commondata))
     createDirectory(DATA_DIRNAME)
-    (createModule(dataPath().__add__(mod)) for mod in moduleList)
+    (createModule(dataPath().__add__(mod)) for mod in MODULE_LIST)
     
     createPropertiesFile()
     createSettingsFile()
@@ -124,9 +124,9 @@ def dataPath():
     return f"{DATA_DIRNAME}/"
 
 def footsitePath():
-    return f"{dataPath()}{moduleList[FOOTSITE_INDEX]}/"
+    return f"{dataPath()}{MODULE_LIST[FOOTSITE_INDEX]}/"
 
 def adidasPath():
-    return f"{dataPath()}{moduleList[ADIDAS_INDEX]}/"
+    return f"{dataPath()}{MODULE_LIST[ADIDAS_INDEX]}/"
 
 
