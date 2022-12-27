@@ -1,19 +1,22 @@
-import imaplib,re
+import re
+from imaplib import IMAP4_SSL
 from text_interface import file_to_list, write_list, email as e
 from urllib.parse import unquote
-from print_cli import*
-from json_interface import e_mail,password
+from json_interface import Settings
 from print_cli import error,status,success
 
-
-
+settings = Settings()
+e_mail=""
+password=""
 
 gmail_host = 'imap.gmail.com'
-link_prefix = "https://www.champssports.ca/user-activation.html?activationToken=3D"
 
 
-def grab_activationToken():
-    var = imaplib.IMAP4_SSL(host=gmail_host)
+link_prefix = {0:"https://www.champssports.ca/user-activation.html?activationToken=3D"}
+
+
+def grab_activationToken(file,fromWho,subjet,module:int):
+    var:IMAP4_SSL =IMAP4_SSL(host=gmail_host)
     status,message=var.login(user=e_mail, password=password)
     if status=='OK':
         success(str(message[0]))
@@ -21,12 +24,11 @@ def grab_activationToken():
         error(str(message[0]))
         return
     
-    var.select("INBOX")
-    _, result = var.search(None,'(FROM "Champs Sports")',
-                           '(SUBJECT "Finish Activating Your Account")', 'UNSEEN')
-    data = result[0].split()
-    status(f"Total Messages from Champs Sports:  {len(data)}")
+    data = extract_mail(var,fromWho,subjet,module)
+    list_link = extractLink(var, data)
+    write_list(file,list_link)
 
+def extractLink(var:IMAP4_SSL, data,module:int):
     list_link = []
 
     for m in data:
@@ -40,16 +42,22 @@ def grab_activationToken():
         else:
             index = -4
             
-        value = str(temp_list[index]).replace(
-            "=\\r\\n", "").split("&")[0].removeprefix(link_prefix)
-        list_link.append(unquote(value))
+    value = str(temp_list[index]).replace("=\\r\\n", "").split("&")[0].removeprefix(link_prefix.get(module))
+    list_link.append(unquote(value))
+    return list_link
 
-    write_list(file=e, data=list_link)
+def extract_mail(var:IMAP4_SSL,fromWho:str,subject:str):
+    var.select("INBOX")
+    _, result = var.search(None,f'(FROM "{fromWho}")',
+                           f'(SUBJECT "{subject}")', 'UNSEEN')
+    data = result[0].split()
+    status(f"Total Messages from {fromWho}:  {len(data)}")
+    return data
 
-def load_allToken():
-    
+
+def load_allToken(file):
     list_link=[]
-    for element in file_to_list(e):
+    for element in file_to_list(file):
         list_link.append(ActivationToken(str(element)))
 
     return list_link
