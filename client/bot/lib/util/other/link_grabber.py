@@ -69,3 +69,5 @@ class ActivationToken:
     def to_json(self):
         return {"activationToken": self.token}
 
+    def __repr__(self) -> str:
+        return self.token
