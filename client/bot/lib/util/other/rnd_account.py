@@ -1,12 +1,13 @@
 from rnd_accData import gen_birthday, gen_password, gen_number , BirthFormat
-from util.fileInterface.text_interface import rnd_fname, rnd_lname, file_to_list, domain, names
+from util.fileInterface.text_interface import file_to_list
+from file_manager import commonFilePath
+from constant import names,domain,rnd_lname,rnd_fname
 from random import choice
 
-rnd_lastName = file_to_list(rnd_lname)
-rnd_firstName = file_to_list(rnd_fname)
-fullNames = file_to_list(names)
-dom = file_to_list(domain)
-
+rnd_lastName = file_to_list(commonFilePath(rnd_lname))
+rnd_firstName = file_to_list(commonFilePath(rnd_fname))
+fullNames = file_to_list(commonFilePath(names))
+dom = file_to_list(commonFilePath(domain))
 
 
 def gen_email():
@@ -22,7 +23,7 @@ def gen_email():
 def gen_list_account(amount: int, full_name: tuple):
     first, last = full_name
     list = []
-    for x in range(amount):
+    for _ in range(amount):
         list.append(Account(firstName=first, lastName=last))
 
     return list

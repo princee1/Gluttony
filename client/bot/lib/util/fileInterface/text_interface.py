@@ -1,14 +1,5 @@
 
 
-names = "Bulk_names.txt"
-domain = "Domains.txt"
-proxy = "Proxy.txt"
-rnd_lname = "randomlname.txt"
-rnd_fname = "randomfname.txt"
-email = "Emails to confirm.txt"
-user_agents="user-agents.txt"
-
-
 def file_to_list(file: str):
     """
     It reads a file and returns a list of the lines in the file
