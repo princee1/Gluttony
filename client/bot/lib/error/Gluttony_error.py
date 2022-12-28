@@ -1,12 +1,17 @@
 from builtins import BaseException
+#NOTE use logging module
+import logging as log 
 from ui.print_cli import *
 
 ERROR_FILE:str
+ERROR_LEVEL={}
+
 
 class GluttonyException(BaseException):
     
-    def __init__(self, *args: object,errorCode,message,reason=None,solution=None) -> None:
-        super().__init__(*args) 
+    def __init__(self, *args: object,name,errorCode,message,reason=None,solution=None,) -> None:
+        super().__init__(*args)
+        self.name=name
         self.errorCode=errorCode
         self.message=message
         self.reason=reason
@@ -36,10 +41,19 @@ class GluttonyException(BaseException):
         pass
 
     def logger(self):
-        
-        pass
-    
-    #TODO faire le format
+        rpr:str= self.error_represation(False)
+        pass   
+
     def __repr__(self) -> str:
         superRepr=super().__repr__()
+        return self.error_represation(True)
+       #TODO faire le format 
+    def error_represation(self,isColored:bool):
+        
+        
+        
+        text=f"""
     
+        
+        """
+        
