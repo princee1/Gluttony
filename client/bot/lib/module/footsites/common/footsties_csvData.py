@@ -1,7 +1,12 @@
-from util.fileInterface.csv_interface import CSV_Data
+from util.fileInterface.csv_interface import CSVData,ListBuilder
 import util.fileInterface.csv_interface as csvi
 
-class Footsite_CSV(CSV_Data): 
+ACCOUNT_FILE:str
+ENTRIES_FILE:str
+WINS_FILE:str
+
+
+class Footsite_CSV(CSVData): 
     
     def __init__(self, file_index, data: list):
         super().__init__(file_index,data)
@@ -14,7 +19,7 @@ class Footsite_CSV(CSV_Data):
 
     pass
 
-class CSV_Test(CSV_Data):
+class CSV_Test(CSVData):
     def __init__(self,email,sku) -> None:
         self.email=email
         self.sku=sku
@@ -58,4 +63,38 @@ class Footsite_Entries_CSV(Footsite_CSV):
     pass
 
 class Footsite_Win_CSV(Footsite_CSV): 
+    pass
+
+
+class FootsiteListBuilder_Acc(ListBuilder):
+    
+    def __init__(self,names,ready):
+        self.ready = ready
+        super().__init__(ACCOUNT_FILE,names)
+    
+    def condition(self,row,cpt):
+        temp = Footsite_Account_CSV(cpt,row)
+        pass
+    
+    pass
+
+class FootsiteListBuilder_Entries(ListBuilder):
+    
+    def __init__(self,names):
+        super().__init__(ENTRIES_FILE,names)
+    
+    def condition(self,row,cpt):
+        temp = Footsite_Entries_CSV(cpt,row)
+        pass
+    
+    pass
+
+class FootsiteListBuilder_Win(ListBuilder):
+    def __init__(self,names):
+        super().__init__(WINS_FILE,names)
+    
+    def condition(self,row,cpt):
+        temp = Footsite_Win_CSV(cpt,row)
+        pass
+    
     pass
