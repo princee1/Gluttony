@@ -72,8 +72,7 @@ class ListBuilder:
                     continue
             self.condition(row,cpt)
             cpt+=1
-
-    
+ 
     def initSheet(self,file):
         """
         It takes a file name as an argument and returns a sheet object
@@ -82,35 +81,7 @@ class ListBuilder:
         """
         self.sheet=pe.get_sheet(file_name=file, name_columns_by_row=0)
         
-    def search(self,email:str):
-        """
-        It takes an email address and a list of CSVData objects and returns the index of the CSVData object
-        in the list that has the same email address as the one passed in
-        
-        :param email: the email address of the user
-        :type email: str
-        :param list: list of CSVData objects
-        :type list: list
-        :return: The index of the element in the list that matches the email address.
-        """
-        temp=CSVData(email)
-        for element in list:
-            element:CSVData
-            if element.__eq__(temp):
-                return element
-        return None
-    
-
-    
-   
-
-    
-    def __init__(self,names) -> None:
-        super().__init__("e", names)
-        
-    def condition(self, s, cpt):
-        self.list.append(CSV_Entries(cpt,s))
-    
+ 
     pass
 # Interface function ==========================================
 
@@ -174,21 +145,31 @@ def copyRow(email:str,sku:str):
     #TODO implementer plus tard
     pass
 
-def deleteRow(email:str,file):
-    index=find(file,email)
-    delete([index],file)
-    
 def delete(index,file):
-   try:
+    """
+    It deletes the row at the index specified in the file specified
+    
+    :param index: The index of the row you want to delete
+    :param file: The name of the file you want to delete from
+    :return: A tuple of two values.
+    """
+    try:
        sheet= pe.get_sheet(file_name=file, name_columns_by_row=0)
        sheet.delete_rows(index)
        saveFile(sheet,file)
        return True,"Value deleted !"
     
-   except TypeError:
+    except TypeError:
        return False,"Value Not Found..."
     
 def saveAll(src,dest):
+    """
+    It takes a source file and a destination file, and then it opens the source file, and then it saves
+    the source file to the destination file
+    
+    :param src: The source file
+    :param dest: The destination file name
+    """
     sheet=pe.get_sheet(file_name=src, name_columns_by_row=0)
     saveFile(sheet,dest)
     
