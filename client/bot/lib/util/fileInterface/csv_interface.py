@@ -2,19 +2,30 @@ import csv
 from pyexcel import sheet
 import pyexcel as pe
 from print_cli import error
-
-
-def test():
-    sheet = pe.get_sheet(file_name=testAcc, name_columns_by_row=0)
-    cpt=0
-    for s in sheet:
-        print(cpt,s,sep="-")
-        cpt+=1
     
-    print(sheet[0,"Email"])
-    #sheet.save_as(testAcc)
-    # print(sheet)
+# Classes =======================================================
 class CSVData:
+    """
+     The class CSVData is a class that represents a single row of data from a CSV file. 
+     
+     The class has a constructor that takes a list of strings and assigns the first four elements of the
+     list to the class variables lname, fname, email, and passw. 
+     
+     The class also has a constructor that takes a single string and assigns it to the class variable
+     email. 
+     
+     The class has a method __repr__ that returns the value of the class variable email. 
+     
+     The class has a method __str__ that returns a string that contains the value of the class variable
+     file_index and the value of the class variable email. 
+     
+     The class has a method __eq__ that compares the value of the class variable email to the value of
+     the class variable email of the object passed to the method. 
+     
+     The class has a method pass that does nothing. 
+     
+     The class has a class variable full
+    """
     def __init__(self, file_index, list: list) -> None:
         self.file_index = file_index
         self.lname = list[0]
@@ -37,28 +48,61 @@ class CSVData:
 
     pass
 
-#FIXME: Tester les objet listbuilder
 class ListBuilder:
+    """
+    It reads a file and builds a list based on the content of the file
+    """
     def __init__(self,file,names=None) -> None:
-        self.list=[]
         self.initSheet(file)
         self.names=names
+        self.build()
         pass
 
-    def condition(self,s,cpt):
+    def condition(self,row,cpt):
         pass
     
     def build(self):
+        """
+        It takes a row from a spreadsheet, and if the row meets a certain condition, it adds it to a list
+        """
+        self.list=[]
         cpt=0
-        for s in self.sheet:
-            if not self.names == None and not self.names.__contains__(s[0]): #FIXME plus tard avec full name
+        for row in self.sheet:
+            if not self.names == None and not self.names.__contains__(row[0]): #FIXME plus tard avec full name
                     continue
-            self.condition(s,cpt)
+            self.condition(row,cpt)
             cpt+=1
-        return self.list   
+
     
     def initSheet(self,file):
-        self.sheet=pe.get_sheet(file_name=mapFile.get(file), name_columns_by_row=0)
+        """
+        It takes a file name as an argument and returns a sheet object
+        
+        :param file: the file name of the excel file
+        """
+        self.sheet=pe.get_sheet(file_name=file, name_columns_by_row=0)
+        
+    def search(self,email:str):
+        """
+        It takes an email address and a list of CSVData objects and returns the index of the CSVData object
+        in the list that has the same email address as the one passed in
+        
+        :param email: the email address of the user
+        :type email: str
+        :param list: list of CSVData objects
+        :type list: list
+        :return: The index of the element in the list that matches the email address.
+        """
+        temp=CSVData(email)
+        for element in list:
+            element:CSVData
+            if element.__eq__(temp):
+                return element
+        return None
+    
+
+    
+   
 
     
     def __init__(self,names) -> None:
@@ -68,24 +112,46 @@ class ListBuilder:
         self.list.append(CSV_Entries(cpt,s))
     
     pass
-#==========================================
+# Interface function ==========================================
 
 def appendAccount_csv(file,data: tuple):
+    """
+    It opens the file in append mode, creates a writer object, and writes the data to the file
+    
+    :param file: the file name
+    :param data: tuple
+    :type data: tuple
+    """
     with open(file, 'a', newline='') as csvAccount:
         writer = csv.writer(csvAccount)
         writer.writerow(data)
         
 def updateValue(file,data:CSVData,):
+    """
+    It takes a file, a data object, and updates the file with the data object
+    
+    :param file: the file to update
+    :param data: the data to be written to the file
+    :type data: CSVData
+    """
     
     sheet = pe.get_sheet(file_name=file, name_columns_by_row=0)
     index=data.file_index
     #TODO le rendre plus general
-    sheet[index,"CustomerID"]=data.customerID
-    sheet[index,"CCore"]=data.cCore
+    #sheet[index,"CustomerID"]=data.customerID
+    #sheet[index,"CCore"]=data.cCore
     saveFile(sheet,data)
     pass
 
 def updateName(file,data:CSVData):
+    """
+    It takes a file name and a CSVData object as parameters, and then updates the first and last name of
+    the person in the file at the index specified in the CSVData object
+    
+    :param file: the file name
+    :param data: CSVData
+    :type data: CSVData
+    """
   
     sheet = pe.get_sheet(file_name=file, name_columns_by_row=0)
     index=data.file_index
@@ -94,21 +160,15 @@ def updateName(file,data:CSVData):
     saveFile(sheet,file)
     pass
 
-def search(email:str,list:list):
-    #FIXME tester
-    temp=CSVData(email)
-    for element in list:
-        element:CSVData
-        if element.__eq__(temp):
-            return element.file_index
-    return None
-
 def saveFile(sheet:sheet.Sheet,destFile):
+    """
+    It takes a sheet object and a destination file name and saves the sheet to the destination file
+    
+    :param sheet: the sheet object you want to save
+    :type sheet: sheet.Sheet
+    :param destFile: The file you want to save the sheet to
+    """
     sheet.save_as(destFile)
-
-def find(file,email):
-    list=listBuilder(file)
-    return search(email,list)
    
 def copyRow(email:str,sku:str):
     #TODO implementer plus tard
