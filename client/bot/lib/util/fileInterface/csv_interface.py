@@ -1,23 +1,8 @@
 import csv
-import os
 from pyexcel import sheet
 import pyexcel as pe
 from print_cli import error
 
-account = "Accounts.csv"
-entries = "Entries.csv"
-auto_conf = ""
-testAcc = "Test.csv"
-mapFile={
-    "a":account,
-    "e":entries
-}
-
-def parse_txtToCSVAccount(line: str):
-    pass
-
-def waitlist(id:str):
-    pass
 
 def test():
     sheet = pe.get_sheet(file_name=testAcc, name_columns_by_row=0)
@@ -25,21 +10,21 @@ def test():
     for s in sheet:
         print(cpt,s,sep="-")
         cpt+=1
-        
-        
+    
     print(sheet[0,"Email"])
     #sheet.save_as(testAcc)
     # print(sheet)
-
-
-class CSV_Data:
+class CSVData:
     def __init__(self, file_index, list: list) -> None:
         self.file_index = file_index
         self.lname = list[0]
         self.fname = list[1]
         self.email = list[2]
         self.passw = list[3]
-        self.fullName = self.fname+self.lname    
+        self.fullName = self.fname+self.lname   
+        
+    def __init__(self,email):
+        self.email=email 
 
     def __repr__(self) -> str:
         return self.email
@@ -52,9 +37,7 @@ class CSV_Data:
 
     pass
 
-    
 #FIXME: Tester les objet listbuilder
-
 class ListBuilder:
     def __init__(self,file,names=None) -> None:
         self.list=[]
@@ -77,24 +60,6 @@ class ListBuilder:
     def initSheet(self,file):
         self.sheet=pe.get_sheet(file_name=mapFile.get(file), name_columns_by_row=0)
 
-class ListBuilder_Account(ListBuilder):
-    
-    def __init__(self, names, active) -> None:
-        super().__init__("a", names)
-        self.active=active
-    
-    def condition(self, s,cpt):
-        val=CSV_Account(cpt,s)
-        if self.active:
-                if not val.idReady:
-                        self.list.append(val)
-        else:
-            self.list.append(val)
-        
- 
-    pass
-
-class ListBuilder_Entries(ListBuilder):
     
     def __init__(self,names) -> None:
         super().__init__("e", names)
@@ -105,77 +70,35 @@ class ListBuilder_Entries(ListBuilder):
     pass
 #==========================================
 
-def createFileCopy(file):
-    pass
-
-def appendAccount_csv(data: tuple):
-    with open(account, 'a', newline='') as csvAccount:
+def appendAccount_csv(file,data: tuple):
+    with open(file, 'a', newline='') as csvAccount:
         writer = csv.writer(csvAccount)
         writer.writerow(data)
-
-def initialize():
-    pass
-
-def updateIds(data:CSV_Account):
+        
+def updateValue(file,data:CSVData,):
     
-    sheet = pe.get_sheet(file_name=mapFile.get('a'), name_columns_by_row=0)
+    sheet = pe.get_sheet(file_name=file, name_columns_by_row=0)
     index=data.file_index
+    #TODO le rendre plus general
     sheet[index,"CustomerID"]=data.customerID
     sheet[index,"CCore"]=data.cCore
-    saveFile(sheet,mapFile.get('a'))
+    saveFile(sheet,data)
     pass
 
-def updateName(data:CSV_Data):
-    
-    raise NotImplemented
-    
-    sheet = pe.get_sheet(file_name=testAcc, name_columns_by_row=0)
+def updateName(file,data:CSVData):
+  
+    sheet = pe.get_sheet(file_name=file, name_columns_by_row=0)
     index=data.file_index
     sheet[index,"FirstName"]=data.fname
     sheet[index,"LastName"]=data.lname
-    saveFile(sheet,testAcc)
+    saveFile(sheet,file)
     pass
 
-def updateEntry(data:CSV_Entries):
-    
-    raise NotImplementedError
-    
-    sheet = pe.get_sheet(file_name=entries, name_columns_by_row=0)
-    index=data.file_index
-    sheet[index,"Reserveid"]=data.reserveId
-    saveFile(sheet,entries)
-
-def listBuilder(file,active:bool=False,name:list=None):
-    List:list =[]
-    try:
-        if file=="e" and active:
-            raise Exception()
-        sheet=pe.get_sheet(file_name=mapFile.get(file), name_columns_by_row=0)
-        if file=="e":
-            pass
-        elif file=="a":
-            cpt=0
-            for s in sheet:
-                val = CSV_Account(cpt,s)
-                if not name == None and name.__contains__(val.fname):
-                    continue
-                if active:
-                    if not val.idReady:
-                        List.append(val)
-                else:
-                    List.append(val)
-                cpt+=1
-    except:
-        pass
-    #print(List)
-    return List
-
-def search(email:str,list:list,sku=None):
+def search(email:str,list:list):
     #FIXME tester
-    temp=CSV_Test(email,sku)
+    temp=CSVData(email)
     for element in list:
-        element:CSV_Data
-        print(element)
+        element:CSVData
         if element.__eq__(temp):
             return element.file_index
     return None
@@ -189,20 +112,17 @@ def find(file,email):
    
 def copyRow(email:str,sku:str):
     #TODO implementer plus tard
-    #index=find("e",email)
-    
     pass
 
-def deleteRow(email:str):
-    index=find("a",email)
-    print(index)
-    delete(index,testAcc)
+def deleteRow(email:str,file):
+    index=find(file,email)
+    delete([index],file)
     
 def delete(index,file):
    try:
        sheet= pe.get_sheet(file_name=file, name_columns_by_row=0)
-       sheet.delete_rows([index])
-       saveFile(sheet,testAcc)
+       sheet.delete_rows(index)
+       saveFile(sheet,file)
        return True,"Value deleted !"
     
    except TypeError:
@@ -212,11 +132,26 @@ def saveAll(src,dest):
     sheet=pe.get_sheet(file_name=src, name_columns_by_row=0)
     saveFile(sheet,dest)
     
-def getRow(email):
+#TODO a faire
+def getRow(find,email):
     find("")
 
+# ========================== #TODO NOT IMPLEMENTED FUNCTION==========================================
+
+def updateEntry():
     
+    raise NotImplementedError
+    
+    sheet = pe.get_sheet(file_name=entries, name_columns_by_row=0)
+    index=data.file_index
+    sheet[index,"Reserveid"]=data.reserveId
+    saveFile(sheet,entries)
 
-#==========================================
+def createFileCopy(file):
+    pass
 
+def parse_txtToCSVAccount(line: str):
+    pass
 
+def initialize():
+    pass
