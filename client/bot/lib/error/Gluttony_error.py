@@ -18,7 +18,7 @@ class GluttonyException(BaseException):
         self.solution=solution
         self.buildReason()
         self.buildSolution()
-        
+       
     def applySolution(self):
         pass
     
@@ -27,6 +27,10 @@ class GluttonyException(BaseException):
     
     def createReason(self):
         pass
+    
+    def logger(self):
+        pass
+    
     
     def buildReason(self):
         if self.reason == None:
@@ -40,20 +44,10 @@ class GluttonyException(BaseException):
         self.createSolution()  
         pass
 
-    def logger(self):
-        rpr:str= self.error_represation(False)
-        pass   
-
-    def __repr__(self) -> str:
+    def __repr__(self) -> str: #TODO faire le format 
         superRepr=super().__repr__()
-        return self.error_represation(True)
-       #TODO faire le format 
-    def error_represation(self,isColored:bool):
-        
-        
-        
-        text=f"""
-    
-        
-        """
+        return """
+                """
+      
+
         
