@@ -2,7 +2,7 @@ import os,sys,time
 
 settings='Settings.json'
 properties="Properties.properties"
-userLockFile="user.glock"
+USERLOCKFILE="user.glock"
 
 FOOTSITE_INDEX=0
 ADIDAS_INDEX=1
@@ -11,7 +11,7 @@ DATA_DIRNAME="data"
 LOG_DIRNAME=".log"
 
 MODULE_LIST=["Footsite","Adidas"]
-commondata="CommonFiles"
+COMMON_DATA="CommonFiles"
 
 MODULE_FILE={
     MODULE_LIST[FOOTSITE_INDEX]:["ActivationToken.txt,Accounts.csv,Settings.json"],
@@ -97,12 +97,14 @@ def initUserBotData():
     """
     
     hashTime = hash(time.time())
-    fileCreator(userLockFile)
-    writeFile(userLockFile,f"new-time~{hashTime}")
+    fileCreator(USERLOCKFILE)
+    writeFile(USERLOCKFILE,f"new-time~{hashTime}")
     
-    createDirectory(commondata)
+    createDirectory(COMMON_DATA)
     createDirectory(DATA_DIRNAME)
+    createDirectory(LOG_DIRNAME)
     (createModule(dataPath().__add__(mod)) for mod in MODULE_LIST)
+    
     
     createPropertiesFile()
     createSettingsFile()
@@ -112,7 +114,8 @@ def initUserBotData():
     #TODO create file for footsite module
     #TODO create file for adidas module
     
-    
+    toHideCmd(USERLOCKFILE)
+    toHideCmd(LOG_DIRNAME)
     pass
 
 def isNewBotData():
@@ -120,12 +123,12 @@ def isNewBotData():
     If the userLockFile doesn't exist, create it.
     """
     try:
-        open(userLockFile,"r")
+        open(USERLOCKFILE,"r")
     except:
         initUserBotData()
 
 def commonFilePath(file):
-    return f"{commondata}/{file}"
+    return f"{COMMON_DATA}/{file}"
 
 def dataPath(file=""):
     return f"{DATA_DIRNAME}/{file}"
