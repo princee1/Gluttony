@@ -47,6 +47,11 @@ def writeFile(filename,buffer,inputMode="w"):
         pass
     pass
 
+    """
+    It takes a filename as an argument and runs the command "attrib +h filename" in the command line
+    
+    :param filename: The name of the file you want to hide
+    """
 def toHideCmd(filename):
     command=f"attrib +h {filename}"
     os.system(command=command)
