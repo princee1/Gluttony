@@ -3,14 +3,16 @@ import os,sys,time
 settings='Settings.json'
 properties="Properties.properties"
 userLockFile="user.glock"
-command=f"attrib +h {userLockFile}"
 
 FOOTSITE_INDEX=0
 ADIDAS_INDEX=1
+
 DATA_DIRNAME="data"
+LOG_DIRNAME=".log"
 
 MODULE_LIST=["Footsite","Adidas"]
 commondata="CommonFiles"
+
 MODULE_FILE={
     MODULE_LIST[FOOTSITE_INDEX]:["ActivationToken.txt,Accounts.csv,Settings.json"],
     MODULE_LIST[ADIDAS_INDEX]:["Accounts.csv,Settings.json"]
@@ -45,6 +47,10 @@ def writeFile(filename,buffer,inputMode="w"):
         pass
     pass
 
+def toHideCmd(filename):
+    command=f"attrib +h {filename}"
+    os.system(command=command)
+    
 
 def createDirectory(dir):
     """
@@ -93,7 +99,6 @@ def initUserBotData():
     hashTime = hash(time.time())
     fileCreator(userLockFile)
     writeFile(userLockFile,f"new-time~{hashTime}")
-    os.system(command=command)
     
     createDirectory(commondata)
     createDirectory(DATA_DIRNAME)
@@ -130,5 +135,8 @@ def footsitePath(file):
 
 def adidasPath(file):
     return f"{dataPath()}{MODULE_LIST[ADIDAS_INDEX]}/{file}"
+
+def logPath(file):
+    return f"{LOG_DIRNAME}/{file}"
 
 
