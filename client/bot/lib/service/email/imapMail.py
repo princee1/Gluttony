@@ -13,8 +13,7 @@ class IMAPMailConn(EmailConn):
     def __init__(self,host:IMAPHost) -> None:
         self.host:IMAPHost=host
         super().__init__()
-        
-    
+           
     def login(self):
         try: 
             self.var:IMAP4_SSL =IMAP4_SSL(host=str(self.host))
@@ -33,8 +32,7 @@ class IMAPMailConn(EmailConn):
     def decorationStatus(self,handler):
         if self.status:
             handler()
-            pass
-        
+            pass    
     #TODO ajouter un decorator
     def extractMail(self,fromWho, subject,mailBox="INBOX"):
         #BUG potentiel: peut etre mieux de mettre un raise Error 
@@ -53,7 +51,4 @@ class IMAPMailConn(EmailConn):
             _,mail = self.var.fetch(data, '(RFC822)')
             self.listData.append(handler(mail,args))
         pass
-   
     pass
-
-test = IMAPMailConn(IMAPHost.GMAIL)
