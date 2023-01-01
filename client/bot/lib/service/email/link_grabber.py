@@ -8,6 +8,13 @@ link_prefix = {0:"https://www.champssports.ca/user-activation.html?activationTok
 
 
 def link_searcher(mail,module=0):
+    """
+    It takes a string, finds all the links in it, and returns the last link in the string
+    
+    :param mail: the email body
+    :param module: 0 for the first module, 1 for the second module, defaults to 0 (optional)
+    :return: The link that is being returned is the link that is being searched for.
+    """
     temp_list = re.findall("(?P<url>https?://[^\s]+)", str(mail)) 
     size = len(temp_list)
     if size == 20:
