@@ -10,6 +10,7 @@ class IMAPHost(Enum):
     """
     GMAIL="imap.gmail.com"
     YAHOO="imap.mail.yahoo.com"
+    OUTLOOK="outlook.office365.com" #BUG potentiel : might not work
 
 
 class IMAPMailConn(EmailConn):
