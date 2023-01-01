@@ -1,15 +1,18 @@
-class EmailConnector():
+
+class EmailConn():
     def __init__(self) -> None:
+        self.listData=[]
+        self.login()
         pass
     
     def login(self):
         pass
     
-    def extractMail(self):
-        pass
-        
-    def extractData():
+    def extractMail(self,mailBox,fromWho,subject):
         pass
     
-    def saveData(self):
+    def extractData(self):
+        pass
+    
+    def saveData(self,filename):
         pass
