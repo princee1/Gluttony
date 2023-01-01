@@ -6,10 +6,18 @@ from enum import Enum
 
 
 class IMAPHost(Enum):
-    GMAIL=""
-    YAHOO=""
+    """The IMAPHost class is an enumeration of the IMAP host names for the two email providers that I use
+    """
+    GMAIL="imap.gmail.com"
+    YAHOO="imap.mail.yahoo.com"
+
 
 class IMAPMailConn(EmailConn):
+    """
+    It's a class that allows you to connect to an IMAP server, login, extract data from emails and then 
+    close the connection
+    """
+    
     def __init__(self,host:IMAPHost) -> None:
         self.host:IMAPHost=host
         super().__init__()
@@ -50,5 +58,6 @@ class IMAPMailConn(EmailConn):
         for data in self.data:
             _,mail = self.var.fetch(data, '(RFC822)')
             self.listData.append(handler(mail,args))
+        self.var.close()   
         pass
     pass
