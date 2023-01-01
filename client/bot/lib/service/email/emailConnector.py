@@ -1,4 +1,4 @@
-
+from text_interface import write_list
 class EmailConn():
     def __init__(self) -> None:
         self.listData=[]
@@ -39,5 +39,6 @@ class EmailConn():
         :param handler: the function that will be called to extract the data
         """
         self.extractData(handler,args)
+        write_list(filename,self.listData)
         #TODO saving the data in the file
         pass
