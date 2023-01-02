@@ -9,7 +9,6 @@ class ColorWebhook(enum.Enum):
     pass
 
 
-
 def sendWebhook(webhookURL,content,id=None,disEmbed=[]):
     """
     It takes a list of DiscordEmbed objects, a webhook URL, a content string, and an optional ID, and
@@ -41,7 +40,7 @@ async def sendAsyncWebhook():
         pass
     pass
 
-def buildEmbed(title,description,filedDict):
+def buildEmbed(title,description,footer=None,color:ColorWebhook=None,thumbnail=None,author:dict=None,image=None,fields=[]):
     """
     This function takes a title and description and returns a DiscordEmbed object
     
@@ -49,8 +48,13 @@ def buildEmbed(title,description,filedDict):
     :param description: The description of the embed
     :return: A DiscordEmbed object
     """
-    d=DiscordEmbed(title,description )
+    d=DiscordEmbed(title,description,color=str(color) )
+    d.set_author(name=author["name"],url=author["url"])
     d.set_timestamp()
+    d.set_image(image)
+    d.set_thumbnail(thumbnail)
+    d.set_footer(footer)
+    (d.add_embed_field(name=field['name'],value=field['value'])for field in fields)
     
     #TODO continuer a build
     
