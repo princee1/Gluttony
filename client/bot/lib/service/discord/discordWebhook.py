@@ -1,5 +1,5 @@
 from discord_webhook import DiscordWebhook,DiscordEmbed,AsyncDiscordWebhook
-import usermanager.user_manager as user
+#import usermanager.user_manager as user
 import enum
 
 USERNAME_WEBHOOOK="Gluttony"
@@ -10,7 +10,7 @@ class ColorWebhook(enum.Enum):
 
 
 
-def sendWebhook(disEmbed,webhookURL,content,id=None):
+def sendWebhook(webhookURL,content,id=None,disEmbed=[]):
     """
     It takes a list of DiscordEmbed objects, a webhook URL, a content string, and an optional ID, and
     sends the webhook.
@@ -20,7 +20,7 @@ def sendWebhook(disEmbed,webhookURL,content,id=None):
     :param content: The message content
     :param id: The id of the webhook
     """
-    webhook = DiscordWebhook(webhookURL,id,content,USERNAME_WEBHOOOK,AVATAR_URL
+    webhook = DiscordWebhook(url=webhookURL,id=id,content=content,username=USERNAME_WEBHOOOK,avatar_url=AVATAR_URL
     )
     (webhook.add_embed(embed) for embed in disEmbed)
     webhook.allowed_mentions=[  
@@ -28,6 +28,7 @@ def sendWebhook(disEmbed,webhookURL,content,id=None):
     try:
         response=webhook.execute()
     except:
+        print(response)
         print("Failed to execute webhook")
     
     pass
@@ -54,3 +55,4 @@ def buildEmbed(title,description,filedDict):
     #TODO continuer a build
     
     return d
+
