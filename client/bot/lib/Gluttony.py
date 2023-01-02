@@ -6,6 +6,7 @@ from mainExecutionManager import main
 import subprocess as sp
 
 
+
 bot_name = "GLUTTONY - CLI"
 asterix_count = 20
 fig_width = 200
@@ -18,16 +19,16 @@ except:
     
 #os.system('color 1f')
 cp.print_principalOption(presentation)
-cp.print_desc(
+cp.desc(
     "*******************************************************************************************************************")
-cp.print_desc(
+cp.desc(
     "*******************************************************************************************************************")
 discordRP()
 try:
     main()
 except ValueError:
-    cp.print_error("Aborting...")
+    cp.error("Aborting...")
 except KeyboardInterrupt:
-    cp.print_error("Aborting...")
+    cp.error("Aborting...")
 
 
