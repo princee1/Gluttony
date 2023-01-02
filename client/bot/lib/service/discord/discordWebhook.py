@@ -48,15 +48,13 @@ def buildEmbed(title,description,footer=None,color:ColorWebhook=None,thumbnail=N
     :param description: The description of the embed
     :return: A DiscordEmbed object
     """
-    d=DiscordEmbed(title,description,color=str(color) )
-    d.set_author(name=author["name"],url=author["url"])
-    d.set_timestamp()
-    d.set_image(image)
-    d.set_thumbnail(thumbnail)
-    d.set_footer(footer)
-    (d.add_embed_field(name=field['name'],value=field['value'])for field in fields)
+    disEmbded=DiscordEmbed(title,description,color=str(color) )
+    disEmbded.set_author(name=author["name"],url=author["url"])
+    disEmbded.set_timestamp()
+    disEmbded.set_image(image)
+    disEmbded.set_thumbnail(thumbnail)
+    disEmbded.set_footer(footer)
+    (disEmbded.add_embed_field(name=field['name'],value=field['value'])for field in fields)
     
-    #TODO continuer a build
-    
-    return d
+    return disEmbded
 
