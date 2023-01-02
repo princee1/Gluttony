@@ -1,4 +1,4 @@
-from discord_webhook import DiscordWebhook,DiscordEmbed
+from discord_webhook import DiscordWebhook,DiscordEmbed,AsyncDiscordWebhook
 import usermanager.user_manager as user
 import time
 
@@ -25,6 +25,14 @@ def sendWebhook(disEmbed,webhookURL,content,id=None):
     except:
         print("Failed to execute webhook")
     
+    pass
+
+async def sendAsyncWebhook():
+    asyncWebhook=AsyncDiscordWebhook()
+    try:
+        await asyncWebhook.execute()
+    except:
+        pass
     pass
 
 def buildEmbed(title,description):
