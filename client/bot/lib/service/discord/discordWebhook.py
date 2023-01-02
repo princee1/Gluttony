@@ -1,9 +1,14 @@
 from discord_webhook import DiscordWebhook,DiscordEmbed,AsyncDiscordWebhook
 import usermanager.user_manager as user
-import time
+import enum
 
 USERNAME_WEBHOOOK="Gluttony"
 AVATAR_URL=""
+
+class ColorWebhook(enum.Enum):
+    pass
+
+
 
 def sendWebhook(disEmbed,webhookURL,content,id=None):
     """
@@ -35,7 +40,7 @@ async def sendAsyncWebhook():
         pass
     pass
 
-def buildEmbed(title,description):
+def buildEmbed(title,description,filedDict):
     """
     This function takes a title and description and returns a DiscordEmbed object
     
@@ -44,5 +49,8 @@ def buildEmbed(title,description):
     :return: A DiscordEmbed object
     """
     d=DiscordEmbed(title,description )
+    d.set_timestamp()
+    
+    #TODO continuer a build
     
     return d
