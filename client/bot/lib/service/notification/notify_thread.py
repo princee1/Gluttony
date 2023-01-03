@@ -1,14 +1,14 @@
 from win10toast import ToastNotifier
 from threading import Event,Thread,Semaphore
 from time import sleep
-
+from random import randint
 
 # It's the duration of the toast notification.
 DURATION = 2
 WAITING = DURATION + 1
 
 N_SEM=1
-TIMEOUT:int
+TIMEOUT= 5*WAITING 
 
 # It's declaring the variables e and t as global variables.
 global e,t,s
@@ -30,6 +30,12 @@ class NotifyThread(Thread):
         self.privatenotify()
     
     def addNotify(self,title,message):
+        """
+        It adds a notification to the list of notifications
+        
+        :param title: The title of the notification
+        :param message: The message to be displayed
+        """
         self.listNotif.append((title,message))
 
     def killThread(self):
@@ -42,7 +48,8 @@ class NotifyThread(Thread):
     
     def privatenotify(self):
         """
-        It waits for an event to be set, then it shows a toast notification, then it clears the event.
+        It waits for a timeout period, then checks if there are any notifications to be shown, and if there
+        are, it shows them.
         """
         while self.active:
             try:
@@ -57,22 +64,34 @@ class NotifyThread(Thread):
                 pass
 
     def notifDataToBeShowed(self):
-        tempList:list
-        iteration:int
+        """
+        It takes the last MAX_TOBESHOWED elements from the list and returns them
+        :return: A list of tuples.
+        """
+        tempList=[]
         n=len(self.listNotif)
         if n==0:
-            return []
+            return tempList
         if NotifyThread.MAX_TOBESHOWED > n:
             iteration=  n-NotifyThread.MAX_TOBESHOWED  
         else:
             iteration= -1
              
-        for i in range(n-1,iteration,-1):
-            tempList.append((self.listNotif.pop(i)))
-            
-        return tempList
+        try:
+            for i in range(n-1,iteration,-1):
+                tempList.append((self.listNotif.pop(i)))
+        except:
+            pass   
+        finally:
+            return tempList
 
     def showNotif(self,tempList):
+        """
+        It takes a list of tuples, and for each tuple, it creates a ToastNotifier object, shows the toast,
+        deletes the object, and waits for the duration of the toast plus 2 seconds.
+        
+        :param tempList: A list of tuples containing the title and message of the notification
+        """
         for title,message in tempList:
             test = ToastNotifier()
             test.show_toast(title=title,msg=message,threaded=True)
@@ -100,7 +119,6 @@ e=Event()
 s=Semaphore(N_SEM)
 t=NotifyThread()
 t.start()
-
 
 
 
