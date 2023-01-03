@@ -7,6 +7,7 @@ from random import randint
 DURATION = 2
 WAITING = DURATION + 1
 
+# It's the number of semaphores and the timeout period.
 N_SEM=1
 TIMEOUT= 5*WAITING 
 
@@ -27,6 +28,7 @@ class NotifyThread(Thread):
         self.listNotif=[]
         
     def run(self) -> None:
+        print(f"Notify Thread Activy: {self.active}")
         self.privatenotify()
     
     def addNotify(self,title,message):
@@ -57,7 +59,7 @@ class NotifyThread(Thread):
                 if self.active:
                     s.acquire()
                     tempList=self.notifDataToBeShowed()
-                    s.release()
+                    s.release(N_SEM)
                     self.showNotif(tempList)                    
                 e.clear()
             except:
@@ -72,8 +74,8 @@ class NotifyThread(Thread):
         n=len(self.listNotif)
         if n==0:
             return tempList
-        if NotifyThread.MAX_TOBESHOWED > n:
-            iteration=  n-NotifyThread.MAX_TOBESHOWED  
+        if NotifyThread.MAX_TOBESHOWED < n:
+            iteration=  n-NotifyThread.MAX_TOBESHOWED-1
         else:
             iteration= -1
              
@@ -93,12 +95,14 @@ class NotifyThread(Thread):
         :param tempList: A list of tuples containing the title and message of the notification
         """
         for title,message in tempList:
-            test = ToastNotifier()
-            test.show_toast(title=title,msg=message,threaded=True)
-            del test
-            sleep(DURATION + 2)
-        
-    
+            try:
+                test = ToastNotifier()
+                test.show_toast(title=title,msg=message,threaded=True,duration=DURATION)
+                del test
+            except:
+                pass
+            sleep(WAITING)
+          
     pass
 
 def notify(title,message):
@@ -110,7 +114,7 @@ def notify(title,message):
     """
     s.acquire()    
     t.addNotify(title,message)
-    s.release
+    s.release(N_SEM)
     if e.isSet():
         e.set()
     
@@ -119,6 +123,4 @@ e=Event()
 s=Semaphore(N_SEM)
 t=NotifyThread()
 t.start()
-
-
 
