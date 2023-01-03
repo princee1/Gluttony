@@ -1,34 +1,13 @@
-import print_cli as cp
 import pyfiglet as fig
-from test import*
-from discord_presence import discordRP
-from mainExecutionManager import main
-import subprocess as sp
-
-
 
 bot_name = "GLUTTONY - CLI"
-asterix_count = 20
-fig_width = 200
+asterix_count = 2
 fig_font = ['nipples', 'smslant', 'smisome1', 'lean', 'larry3d', 'block']
 presentation=bot_name
 try: 
     presentation = fig.Figlet(font='smisome1', width=200).renderText(bot_name)
+    print(presentation)
 except:
     pass
     
-#os.system('color 1f')
-cp.print_principalOption(presentation)
-cp.desc(
-    "*******************************************************************************************************************")
-cp.desc(
-    "*******************************************************************************************************************")
-discordRP()
-try:
-    main()
-except ValueError:
-    cp.error("Aborting...")
-except KeyboardInterrupt:
-    cp.error("Aborting...")
-
 
