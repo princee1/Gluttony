@@ -3,16 +3,17 @@ from threading import Event,Thread,Semaphore
 from time import sleep
 from random import randint
 
-# It's the duration of the toast notification.
-DURATION = 2
-WAITING = DURATION + 1
+if __name__ == '__main__' or __name__=='service.notification.notify_thread':
+    # It's the duration of the toast notification.
+    DURATION = 2
+    WAITING = DURATION + 1
 
-# It's the number of semaphores and the timeout period.
-N_SEM=1
-TIMEOUT= 5*WAITING 
+    # It's the number of semaphores and the timeout period.
+    N_SEM=1
+    TIMEOUT= 5*WAITING 
 
-# It's declaring the variables e and t as global variables.
-global e,t,s
+    # It's declaring the variables e and t as global variables.
+    global e,t,s
 
 class NotifyThread(Thread):
     """
@@ -118,9 +119,9 @@ def notify(title,message):
     if e.isSet():
         e.set()
     
-
-e=Event()
-s=Semaphore(N_SEM)
-t=NotifyThread()
-t.start()
+if __name__ == "__main__" or __name__ == "service.notification.notify_thread":
+    e=Event()
+    s=Semaphore(N_SEM)
+    t=NotifyThread()
+    t.start()
 
