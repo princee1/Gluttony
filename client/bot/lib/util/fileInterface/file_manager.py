@@ -14,8 +14,8 @@ MODULE_LIST=["Footsite","Adidas"]
 COMMON_DATA="CommonFiles"
 
 MODULE_FILE={
-    MODULE_LIST[FOOTSITE_INDEX]:["ActivationToken.txt,Accounts.csv,Settings.json"],
-    MODULE_LIST[ADIDAS_INDEX]:["Accounts.csv,Settings.json"]
+    MODULE_LIST[FOOTSITE_INDEX]:["ActivationToken.txt,Accounts.csv,Settings.json","Entries.csv","Raffle.csv","Waitlist.csv"],
+    MODULE_LIST[ADIDAS_INDEX]:["Accounts.csv","Settings.json","Raffles.csv"]
 }
 
 generalFiles=["Bulk_names.txt","Proxy.txt","Domains.txt"]
@@ -110,6 +110,14 @@ def initUserBotData():
     createDirectory(LOG_DIRNAME)
     (createModule(dataPath().__add__(mod)) for mod in MODULE_LIST)
     
+    createDirectory(footsitePath("Win"))
+    createDirectory(footsitePath("Version"))
+    toHideCmd(footsitePath("Version"))
+    
+    createDirectory(adidasPath("Win"))
+    createDirectory(adidasPath("Version"))
+    toHideCmd(adidasPath("Version"))
+
     
     createPropertiesFile()
     createSettingsFile()
