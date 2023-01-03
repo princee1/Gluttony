@@ -97,8 +97,8 @@ def notify(title,message):
     
 
 e=Event()
-t=NotifyThread()
 s=Semaphore(N_SEM)
+t=NotifyThread()
 t.start()
 
 
