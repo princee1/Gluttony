@@ -1,37 +1,37 @@
 from win10toast import ToastNotifier
-from threading import Event,Thread
+from threading import Event,Thread,Semaphore
+from time import sleep
 
 
 # It's the duration of the toast notification.
 DURATION = 2
+WAITING = DURATION + 1
+
+N_SEM=1
+TIMEOUT:int
 
 # It's declaring the variables e and t as global variables.
-global e,t
+global e,t,s
 
 class NotifyThread(Thread):
     """
     It's a thread that waits for a signal to show a toast notification
     """
+    MAX_TOBESHOWED=5
+    
     def __init__(self) -> None:
         super().__init__()
         self.title=None
         self.message=None
         self.active=True
+        self.listNotif=[]
         
     def run(self) -> None:
         self.privatenotify()
     
-    def setValue(self,title,message):
-        """
-        It sets the value of the message and title variables to the message and title variables passed
-        in.
-        
-        :param title: The title of the message box
-        :param message: The message to be displayed
-        """
-        self.message=message
-        self.title=title
-        
+    def addNotify(self,title,message):
+        self.listNotif.append((title,message))
+
     def killThread(self):
         """
         The function sets the event e to true, which causes the thread to exit the while loop and end
@@ -46,15 +46,40 @@ class NotifyThread(Thread):
         """
         while self.active:
             try:
-                e.wait()
+                e.wait(TIMEOUT)
                 if self.active:
-                    test = ToastNotifier()
-                    test.show_toast(title=self.title,msg=self.message,threaded=True)
-                    del test
+                    s.acquire()
+                    tempList=self.notifDataToBeShowed()
+                    s.release()
+                    self.showNotif(tempList)                    
                 e.clear()
             except:
                 pass
+
+    def notifDataToBeShowed(self):
+        tempList:list
+        iteration:int
+        n=len(self.listNotif)
+        if n==0:
+            return []
+        if NotifyThread.MAX_TOBESHOWED > n:
+            iteration=  n-NotifyThread.MAX_TOBESHOWED  
+        else:
+            iteration= -1
+             
+        for i in range(n-1,iteration,-1):
+            tempList.append((self.listNotif.pop(i)))
+            
+        return tempList
+
+    def showNotif(self,tempList):
+        for title,message in tempList:
+            test = ToastNotifier()
+            test.show_toast(title=title,msg=message,threaded=True)
+            del test
+            sleep(DURATION + 2)
         
+    
     pass
 
 def notify(title,message):
@@ -64,10 +89,18 @@ def notify(title,message):
     :param title: The title of the notification
     :param message: The message to be displayed
     """
-    t.setValue(title,message)
-    e.set()
+    s.acquire()    
+    t.addNotify(title,message)
+    s.release
+    if e.isSet():
+        e.set()
     
 
 e=Event()
 t=NotifyThread()
+s=Semaphore(N_SEM)
 t.start()
+
+
+
+
