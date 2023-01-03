@@ -1,5 +1,12 @@
 from util.other.winResponse import Win
+from util.rafflemanager.raffle import Raffle
+
 WINFILE:str
+
+
+class FootSiteRaffle(Raffle):
+    pass
+
 
 class FootsitesWin(Win):
     
