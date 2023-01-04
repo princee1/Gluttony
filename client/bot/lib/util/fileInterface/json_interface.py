@@ -46,12 +46,13 @@ class Settings():
     def save(self):
         writeJson(self.settings,self.modulePath)
         pass
-    
-    @DeprecationWarning
-    def addData(self):
+
+    def addData(self,key,data):
+        self.setValue(key,data)
         pass
-    @DeprecationWarning
-    def deleteData(self):
+    
+    def deleteData(self,key):
+        self.settings.pop(key)
         pass
 
     pass
