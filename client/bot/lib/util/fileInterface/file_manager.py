@@ -110,15 +110,8 @@ def initUserBotData():
     createDirectory(LOG_DIRNAME)
     (createModule(dataPath().__add__(mod)) for mod in MODULE_LIST)
     
-    createDirectory(footsitePath("Win"))
-    createDirectory(footsitePath("Version"))
-    createDirectory(footsitePath("Entries"))
-    toHideCmd(footsitePath("Version"))
-    
-    createDirectory(adidasPath("Win"))
-    createDirectory(adidasPath("Version"))
-    createDirectory(adidasPath("Entries"))
-    toHideCmd(adidasPath("Version"))
+    createModuleFiles(footsitePath)
+    createModuleFiles(adidasPath)
 
     
     createPropertiesFile()
@@ -132,6 +125,12 @@ def initUserBotData():
     toHideCmd(USERLOCKFILE)
     toHideCmd(LOG_DIRNAME)
     pass
+
+def createModuleFiles(pathHandler):
+    createDirectory(pathHandler("Win"))
+    createDirectory(pathHandler("Version"))
+    createDirectory(pathHandler("Entries"))
+    toHideCmd(pathHandler("Version"))
 
 def isNewBotData():
     """
