@@ -14,7 +14,7 @@ class FootsiteRaffle(Raffle):
         pass
     
     def deconstruct(self, value):
-        #TODOsuper().__init__()
+        #TODOsuper().__init__(ModuleEnum.FOOSITES)
         pass
     pass
 
