@@ -14,11 +14,26 @@ ADIDAS= lambda x: adidasPath("Version")+f"/{x}"
 
 
 def copy(source,dest):
+    """
+    It takes two arguments, a source file and a destination file, and copies the source file to the
+    destination file
+    
+    :param source: The source file to copy
+    :param dest: The destination folder
+    """
     command = f"copy {source} {dest} /Y"
     system(command)
     pass
 
 def createTempFile(source,dest,vsrc):
+    """
+    It creates a temporary file in the destination folder, and then copies the source file to the
+    destination folder
+    
+    :param source: The source file
+    :param dest: The destination file
+    :param vsrc: the path to the settings file
+    """
     versions = Settings(vsrc)
     tempDict={"time":strftime("%D %M %Y %H:%M:%S"),
               "size":getsize(source),
@@ -30,12 +45,25 @@ def createTempFile(source,dest,vsrc):
     pass
 
 def deleteTempFile(file):
+    """
+    It deletes a file
+    
+    :param file: The file to be deleted
+    """
     command = f"del {file} /F"
     system(command)
     pass
 
 
 def checkFile(file,vsrc):
+    """
+    It checks if the file exists in the versions source, if it does, it checks if the file is smaller
+    than the one in the versions source, if it is, it copies the file from the versions source to the
+    file, if it isn't, it deletes the file and removes it from the versions source
+    
+    :param file: the file to be checked
+    :param vsrc: the path to the settings file
+    """
     try:
         versions = Settings(vsrc)
         tempdict=versions.getValue(file)
