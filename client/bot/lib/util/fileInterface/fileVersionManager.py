@@ -44,14 +44,15 @@ def createTempFile(source,dest,vsrc):
     copy(source,dest)
     pass
 
-def deleteTempFile(file):
+def deleteTempFile(file,vsrc):
     """
-    It deletes a file
+    It deletes a file and removes it from the versions source
     
     :param file: The file to be deleted
     """
     command = f"del {file} /F"
     system(command)
+    Settings(vsrc).deleteData(file)
     pass
 
 
