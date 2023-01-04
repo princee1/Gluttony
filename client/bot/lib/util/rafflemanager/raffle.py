@@ -56,5 +56,6 @@ def raffleReader(file,handler):
             tempRaffle=handler(values)
             if tempRaffle.isActive():
                 listRaffle.append()
+    del values
     return listRaffle
     
