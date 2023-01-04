@@ -24,6 +24,9 @@ class Raffle:
     
     def isActive(self)-> bool:
         pass
+    
+    def __repr__(self) -> str:
+        return "SKU: {} Name: {} Date: {}".format(self.sku,self.name,self.dateRaffle)
     pass
 
 def raffleReader(file,handler):
