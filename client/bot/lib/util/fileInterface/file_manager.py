@@ -125,8 +125,15 @@ def initUserBotData():
     toHideCmd(USERLOCKFILE)
     toHideCmd(LOG_DIRNAME)
     pass
-
+    
 def createModuleFiles(pathHandler):
+    """
+    It creates a directory called "Win" in the current directory, then creates a directory called
+    "Version" in the "Win" directory, then creates a directory called "Entries" in the "Version"
+    directory, then hides the "Version" directory.
+    
+    :param pathHandler: A function that takes a string and returns a string
+    """
     createDirectory(pathHandler("Win"))
     createDirectory(pathHandler("Version"))
     createDirectory(pathHandler("Entries"))
