@@ -1,5 +1,7 @@
 from time import time,ctime,mktime
 
+# A class that represents a raffle, with a sku, name, date, and dateRaffle, and has methods to get the
+# elapsed time, deconstruct, and check if it's active.
 class Raffle:
     
     def __init__(self,sku:str,name:str,date,dateRaffle):
@@ -23,7 +25,6 @@ class Raffle:
     def isActive(self)-> bool:
         pass
     pass
-
 
 def raffleReader(file,handler):
     """
