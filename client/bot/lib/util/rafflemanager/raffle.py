@@ -4,11 +4,12 @@ from time import time,ctime,mktime
 # elapsed time, deconstruct, and check if it's active.
 class Raffle:
     
-    def __init__(self,sku:str,name:str,date,dateRaffle):
+    def __init__(self,sku:str,name:str,date,dateRaffle,module):
         self.sku = sku
         self.name = name
         self.date = date
         self.dateRaffle=dateRaffle
+        self.module=module
         pass
     
     def __init__(self,values):
@@ -26,7 +27,7 @@ class Raffle:
         pass
     
     def __repr__(self) -> str:
-        return "SKU: {} Name: {} Date: {}".format(self.sku,self.name,self.dateRaffle)
+        return "Store:{} SKU: {} Name: {} Date: {}".format(self.module,self.sku,self.name,self.dateRaffle)
     pass
 
 def raffleReader(file,handler):
