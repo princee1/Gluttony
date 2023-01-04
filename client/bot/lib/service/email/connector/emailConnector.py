@@ -1,11 +1,11 @@
 from text_interface import write_list
 class EmailConn():
-    def __init__(self) -> None:
+    def __init__(self,user,passw) -> None:
         self.listData=[]
-        self.login()
+        self.login(user,passw)
         pass
     
-    def login(self):
+    def login(self,user,passw):
         """
         This function logs in the user.
         """

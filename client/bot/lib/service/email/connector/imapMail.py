@@ -19,9 +19,9 @@ class IMAPMailConn(EmailConn):
     close the connection
     """
     
-    def __init__(self,host:IMAPHost) -> None:
+    def __init__(self,host:IMAPHost,user,passw) -> None:
         self.host:IMAPHost=host
-        super().__init__()
+        super().__init__(user,passw)
            
     def login(self):
         try: 
