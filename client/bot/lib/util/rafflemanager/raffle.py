@@ -4,7 +4,7 @@ from time import time,ctime,mktime
 # elapsed time, deconstruct, and check if it's active.
 class Raffle:
     
-    def __init__(self,sku:str,name:str,date,dateRaffle,module):
+    def __init__(self,module,sku:str,name:str,date,dateRaffle):
         self.sku = sku
         self.name = name
         self.date = date
