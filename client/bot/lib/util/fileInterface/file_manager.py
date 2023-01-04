@@ -134,8 +134,11 @@ def createModuleFiles(pathHandler):
     
     :param pathHandler: A function that takes a string and returns a string
     """
+    version ="Version"
+    settingVersion="Settings"
     createDirectory(pathHandler("Win"))
-    createDirectory(pathHandler("Version"))
+    createDirectory(pathHandler(version))
+    fileCreator(f"{pathHandler(version)}/{settingVersion}")
     createDirectory(pathHandler("Entries"))
     toHideCmd(pathHandler("Version"))
 
