@@ -5,14 +5,28 @@
 
 from time import strftime
 from os import system
+from os.path import getsize
 from file_manager import footsitePath,adidasPath
+from json_interface import Settings
 
 FOOTSITE = lambda x : footsitePath("Version")+f"/{x}"
 ADIDAS= lambda x: adidasPath("Version")+f"/{x}"
 
-def createTempFile(source,dest):
+
+def copy(source,dest):
     command = f"copy {source} {dest} /Y"
     system(command)
+    pass
+
+def createTempFile(source,dest,vsrc):
+    versions = Settings(vsrc)
+    tempDict={"time":strftime("%D %M %Y %H:%M:%S"),
+              "size":getsize(source),
+               "dest":dest}
+    versions.setValue(source,tempDict)
+    del versions
+    del tempDict
+    copy(source,dest)
     pass
 
 def deleteTempFile(file):
@@ -21,5 +35,16 @@ def deleteTempFile(file):
     pass
 
 
-def checkFile(file):
-    pass
+def checkFile(file,vsrc):
+    try:
+        versions = Settings(vsrc)
+        tempdict=versions.getValue(file)
+        if getsize(file)< tempdict["size"]:
+            copy(tempdict["dest"],file)
+        else :
+            deleteTempFile(file)
+            versions.deleteData(file)
+        del versions
+        del tempdict
+    except:
+        pass 
