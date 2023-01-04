@@ -26,6 +26,22 @@ class Raffle:
 
 
 def raffleReader(file,handler):
+    """
+    It reads a file, and for each line, it calls a handler function that returns a Raffle object. 
+    
+    The handler function is a function that takes a list of strings and returns a Raffle object. 
+    
+    The handler function is passed as a parameter to the raffleReader function. 
+    
+    The raffleReader function returns a list of Raffle objects. 
+    
+    The raffleReader function is a function that takes a file name and a handler function and returns a
+    list of Raffle objects. 
+    
+    :param file: the file name
+    :param handler: a function that takes a list of strings and returns a Raffle object
+    :return: A list of Raffle objects
+    """
     listRaffle=[]
     values=[]
     with open(file,"r") as fd:
@@ -39,7 +55,5 @@ def raffleReader(file,handler):
             tempRaffle=handler(values)
             if tempRaffle.isActive():
                 listRaffle.append()
-        pass
-    
     return listRaffle
     
