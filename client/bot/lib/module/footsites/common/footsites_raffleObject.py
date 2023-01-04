@@ -5,6 +5,13 @@ WINFILE:str
 
 
 class FootSiteRaffle(Raffle):
+    def __init__(self,response):
+        self.deconstruct(response)
+        pass
+    
+    def deconstruct(self, value):
+        #TODOsuper().__init__()
+        pass
     pass
 
 
