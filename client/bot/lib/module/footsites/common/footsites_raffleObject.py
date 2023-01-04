@@ -1,7 +1,8 @@
 from util.other.winResponse import Win
-from util.rafflemanager.raffle import Raffle
+from util.rafflemanager.raffle import Raffle,raffleReader
 
 WINFILE:str
+RAFFLE_FILE:str
 
 
 # > The `FootsiteRaffle` class is a subclass of the `Raffle` class. It has a constructor that takes a
@@ -33,3 +34,9 @@ class FootsitesWin(Win):
     def toDiscordEmbedValue(self) -> tuple:
         pass
     pass
+
+def returnRaffle(values):
+    return FootsiteRaffle(values)
+ 
+def getFootsiteRaffle():
+    return raffleReader(RAFFLE_FILE,returnRaffle)
