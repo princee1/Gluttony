@@ -21,3 +21,5 @@ def deleteTempFile(file):
     pass
 
 
+def checkFile(file):
+    pass
