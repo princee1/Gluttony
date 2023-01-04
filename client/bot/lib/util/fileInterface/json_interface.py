@@ -53,6 +53,7 @@ class Settings():
     
     def deleteData(self,key):
         self.settings.pop(key)
+        self.save()
         pass
 
     pass
