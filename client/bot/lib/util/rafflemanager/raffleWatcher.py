@@ -1,6 +1,6 @@
 from threading import Timer
 from raffle import Raffle
-from math import ceil,floor
+from math import floor
 
 
 # The RaffleTimer class is a subclass of the Timer class. It has a constructor that takes in a Raffle
