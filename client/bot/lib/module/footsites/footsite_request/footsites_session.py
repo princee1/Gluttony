@@ -97,22 +97,22 @@ class FootsiteSession(Requestable):
         return return_result(successCode,self.response,succesText)
     pass
 
-
 class FoositeAuth(FootsiteSession):
     
     def __init__(self, proxy, useragents,footstiteData):
         super().__init__(proxy, useragents)
         self.footsiteData:Footsite_CSV=footstiteData
         
-    def footsiteRequest(self,successCode):
-        result=super().footsiteRequest(auth_url_champs, "POST", self.footsiteData.login_data()).cookies
-        try:
-            self.updaterHeaders(self.response.cookies)
-            self.cookies["datadome"]=self.response.cookies.get("datadome")       
-            return return_result(200,self.response,"Succesfully Logged in!") 
-        except:
-            return result
+    def footsiteRequest(self):
+        pass
 
+    def authenticate(self):
+        result=super().footsiteRequest(auth_url_champs, "POST", self.footsiteData.login_data(),200,"Succesfully Logged in!")
+        if result[0]:
+            self.updaterHeaders(self.response.cookies)
+            self.cookies["datadome"]=self.response.cookies.get("datadome")   
+        return result
+        
     pass
 
 
