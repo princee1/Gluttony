@@ -37,3 +37,6 @@ class FoostiteRenameAccount(FoositeAuth):
 
 class FoostiteIds(FoositeAuth):
     pass
+
+class FoostiteResendToken(FoositeAuth):
+    pass
