@@ -1,15 +1,17 @@
 from requestable_interface import Requestable
-from threading import Semaphore,BoundedSemaphore,Thread
+from threading import Semaphore,BoundedSemaphore,Thread,Event
 
 
 MAX_ALIVE_TRHEAD=50
-
+N=1
 
 class Task(Thread):
     def __init__(self,request:Requestable,index:int,semOut,semData):
         super().__init__(self,daemon=False)
         self.request = request
         self.index=index
+        self.semOut=semOut
+        self.semData=semData
         
     def  run(self):
         pass
@@ -29,8 +31,20 @@ class Task(Thread):
     
     pass
 
-class TaskMaganagr():
-    pass
-
-class TaskSemaphore(Semaphore):
+class TaskManager():
+    
+    def __init__(self,taskList):
+        self.taskList:list[Task] = taskList
+        self.eventList:list[Event]= []
+        self.thradComm=Thread(target=self.communicate)
+    
+    def start(self):
+        pass
+    
+    def waitThread(self):
+        pass
+    
+    def communicate(self):
+        pass
+    
     pass
