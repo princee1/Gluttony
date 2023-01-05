@@ -1,6 +1,8 @@
 from requestable_interface import Requestable
-from threading import Thread
+from threading import Semaphore,BoundedSemaphore,Thread
 
+
+MAX_ALIVE_TRHEAD=50
 
 
 class Task(Thread):
@@ -25,4 +27,10 @@ class Task(Thread):
         return super().__repr__()
 
     
+    pass
+
+class TaskMaganagr():
+    pass
+
+class TaskSemaphore(Semaphore):
     pass
