@@ -2,6 +2,15 @@
 from requests import Session
 from enum import Enum
 
+map_statusCode_error = {
+    403: "Captcha Found",
+    400: "Request Error",
+    418: "Teapot error",
+    407: "Proxy Authentication Required",
+    408: "Request timeout",
+    429: "Too Many Request",
+    503: "First byte timeout"
+}
 class RequestState(Enum):
     ERROR=0,
     SUCCESS=1,
