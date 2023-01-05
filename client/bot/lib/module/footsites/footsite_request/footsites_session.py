@@ -112,3 +112,24 @@ class FoositeAuth(FootsiteSession):
     pass
 
 
+
+def parse_error(response: Response):
+    val = map_statusCode_error.get(response.status_code)
+
+    try:
+        if response.status_code == 400:
+            mess = response.json()["errors"][0]['message']
+            return f"{val}: {mess}"
+    except:
+        pass
+    return val
+
+
+def return_result(succes_code: int, respone: Response, text: str):
+
+    status_code = respone.status_code
+    if status_code == succes_code:
+        return True, text
+    else:
+        return False, parse_error(respone)
+
