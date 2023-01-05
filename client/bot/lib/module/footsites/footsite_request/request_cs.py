@@ -6,12 +6,12 @@ from requests import auth, post, get, Response, request, Session
 from requests.adapters import ProxyError, SSLError
 from requests.exceptions import ReadTimeout
 from requests.sessions import session
-from csv_interface import CSV_Account, CSV_Data, appendAccount_csv, updateIds, updateName
+from csv_interface import CSV_Account, CSVData, appendAccount_csv, updateIds, updateName
 from text_interface import deleteElement_inFile, email
 import headers_gen as hd
 from rnd_account import Account
-from proxie_parser import Proxy, parseProxy
-from link_grabber import ActivationToken
+from client.bot.lib.util.proxyManager.proxie_parser import Proxy, parseProxy
+from client.bot.lib.service.email.link_grabber import ActivationToken
 from json import JSONDecodeError
 from enum import Enum
 
@@ -45,61 +45,20 @@ class RequestType(Enum):
 def get_datadome(proxie, user):
     reponse = post(
         proxies=proxie,
-        # verify=False,
-        timeout=2,
-        # auth=proxie.get_auth(),
         url=datadome_url,
         headers={
-            # 'accept': '*/*',
-            # 'accept-encoding': 'gzip, deflate, br',
-            # 'accept-language': "en-US,en;q=0.9,fr-CA;q=0.8,fr;q=0.7",
-            # content-length: 4189
-            # 'content-type': 'application/x-www-form-urlencoded',
-            # 'dnt': '1',
             'origin': 'https://www.champssports.ca',
             'referer': 'https://www.champssports.ca/',
-            # 'sec-ch-ua': '''" Not A;Brand";v="99", "Chromium";v="96", "Google Chrome";v="96"''',
-            # 'sec-ch-ua-mobile': "?0",
-            # sec-ch-ua-platform: "Windows"
-            # sec-fetch-dest: empty
-            # sec-fetch-mode: cors
-            # sec-fetch-site: cross-site
             'user-agent': user
         }, data={
-            # 'jsType': 'ch',
-            # 'cid': 'uSrfjF3l2frIXcg2FqsqistVILdF4BVsEWkGJA4-vfz0uJSnMKnkFlugbB.yG1DxAKl~EXK0iGw90fJTYP8fkEf-Q~Nb~EKQ~9kC2n8mhF84j2Ra8JLxpq49hkHqAaa',
             'ddk': datadome_api_key,
             'Referer': '''https%3A%2F%2Fwww.champssports.ca%2F''',
-            # 'request': '%2F',
             'responsePage': 'origin',
-            # 'ddv': '4.1.73'
         }
     )
 
     return reponse.json()['cookie'].split(";")[0].split("=")[1]
 
-
-
-
-def parse_error(response: Response):
-    val = map_statusCode_error.get(response.status_code)
-
-    try:
-        if response.status_code == 400:
-            mess = response.json()["errors"][0]['message']
-            return f"{val}: {mess}"
-    except:
-        pass
-    return val
-
-
-def return_result(succes_code: int, respone: Response, text: str):
-
-    status_code = respone.status_code
-    if status_code == succes_code:
-        return True, text
-    else:
-        return False, parse_error(respone)
 
 
 class RequestCS:
@@ -175,7 +134,7 @@ class RequestCS:
                            json=self.requestData
                            )
 
-        except KeyError:
+        except KeyError: 
             return False, "Couldnt connect to the Server"
         except JSONDecodeError:
             return False, "Couldnt get a session"
@@ -201,7 +160,7 @@ class RequestCS:
 class RequestCS_NextStep(RequestCS):
 
     # LOL=None
-    def __init__(self, proxie: Proxy, useragents, requestType, account: CSV_Data):
+    def __init__(self, proxie: Proxy, useragents, requestType, account: CSVData):
         super().__init__(proxie, useragents)
         self.requestType = requestType
         self.data = None
@@ -278,7 +237,7 @@ class RequestCS_Auth(RequestCS):
 
     RESEND_EMAIL: bool = False
 
-    def __init__(self, proxie: Proxy, useragents, account: CSV_Data, requestType: RequestType):
+    def __init__(self, proxie: Proxy, useragents, account: CSVData, requestType: RequestType):
         super().__init__(proxie, useragents)
         self.account = account
         self.second_rqcs = self.createSecondRqcs(requestType)
@@ -341,7 +300,7 @@ class RequestFTL_CheckWins(RequestCS_NextStep):
 
     MESSAGE = ""
 
-    def _init(self, proxie: Proxy, useragents, account: CSV_Data):
+    def _init(self, proxie: Proxy, useragents, account: CSVData):
         super.__init__(proxie, useragents, "GET", account)
 
     def request(self, url, datadome, sessionid, text):
@@ -360,7 +319,7 @@ class RequestFTL_ConfirmWins(RequestCS_NextStep):
 class RequestCS_ResendToken(RequestCS_NextStep):
     MESSAGE = "Token Resent To Email"
 
-    def __init__(self, proxie: Proxy, useragents, account: CSV_Data):
+    def __init__(self, proxie: Proxy, useragents, account: CSVData):
         super().__init__(proxie, useragents, "POST", account)
         self.requestData = account.tokenData()
 
