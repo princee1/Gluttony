@@ -1,6 +1,6 @@
 from urllib.request import proxy_bypass
 from client.bot.lib.util.proxyManager.proxie_parser import Proxy
-from util.taskmanager.requestable_interface import Requestable
+from util.taskmanager.requestable_interface import Requestable,map_statusCode_error as MAP_ERROR,RequestState
 import headers_gen as hg
 from enum import Enum
 from common.footsties_csvData import Footsite_CSV
@@ -73,7 +73,7 @@ class FootsiteSession(Requestable):
     def __repr__(self) -> str:
         return f"CSRF Token {self.cr} - Session Id {self.sessionid} "
 
-    def footsiteRequest(self,url,method,data,successCode=None):
+    def footsiteRequest(self,url,method,data,successCode,succesText):
         try:
             response =self.request(method,url,headers=self.headers
                          ,cookies=self.cookies,
@@ -92,8 +92,9 @@ class FootsiteSession(Requestable):
         except ReadTimeout:
             return False, "Timeout Error"
         pass
-        
-        return 
+        self.response=response
+        del response
+        return return_result(successCode,self.response,succesText)
     pass
 
 
@@ -104,18 +105,20 @@ class FoositeAuth(FootsiteSession):
         self.footsiteData:Footsite_CSV=footstiteData
         
     def footsiteRequest(self,successCode):
-        cookie= super().footsiteRequest(auth_url_champs, "POST", self.footsiteData.login_data()).cookies
-        self.updaterHeaders(cookie)
-        self.cookies["datadome"]=cookie.get("datadome")        
-        
+        result=super().footsiteRequest(auth_url_champs, "POST", self.footsiteData.login_data()).cookies
+        try:
+            self.updaterHeaders(self.response.cookies)
+            self.cookies["datadome"]=self.response.cookies.get("datadome")       
+            return return_result(200,self.response,"Succesfully Logged in!") 
+        except:
+            return result
 
     pass
 
 
 
-def parse_error(response: Response):
-    val = map_statusCode_error.get(response.status_code)
-
+def parse_error(response):
+    val = MAP_ERROR.get(response.status_code)
     try:
         if response.status_code == 400:
             mess = response.json()["errors"][0]['message']
@@ -125,7 +128,7 @@ def parse_error(response: Response):
     return val
 
 
-def return_result(succes_code: int, respone: Response, text: str):
+def return_result(succes_code: int, respone, text: str):
 
     status_code = respone.status_code
     if status_code == succes_code:
