@@ -41,7 +41,10 @@ class TaskManager():
     def start(self):
         pass
     
-    def waitThread(self):
+    def waitThreads(self):
+        for t in self.taskList:
+            t.join()
+        
         pass
     
     def communicate(self):
