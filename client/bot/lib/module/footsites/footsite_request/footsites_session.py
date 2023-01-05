@@ -97,7 +97,7 @@ class FootsiteSession(Requestable):
     def __repr__(self) -> str:
         return f"CSRF Token {self.cr} - Session Id {self.sessionid} "
 
-    def footsiteRequest(self,url,method,data,successCode,succesText):
+    def moduleRequest(self,url,method,data,successCode,succesText):
         """
         It takes a url, method, data, successCode, and successText and returns a boolean and a string.
         
@@ -161,7 +161,7 @@ class FoositeAuth(FootsiteSession):
         :return: The result is a tuple of two elements. The first element is a boolean value that indicates
         whether the request was successful or not. The second element is the response object.
         """
-        result=super().footsiteRequest(auth_url_champs, "POST", self.footsiteData.login_data(),200,"Succesfully Logged in!")
+        result=super().moduleRequest(auth_url_champs, "POST", self.footsiteData.login_data(),200,"Succesfully Logged in!")
         if result[0]:
             self.updaterHeaders(self.response.cookies)
             self.cookies["datadome"]=self.response.cookies.get("datadome")   
