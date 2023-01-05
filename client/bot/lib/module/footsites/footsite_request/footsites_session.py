@@ -94,7 +94,7 @@ class FootsiteSession(Requestable):
         pass
         self.response=response
         del response
-        return return_result(successCode,self.response,succesText)
+        return returnState(successCode,self.response,succesText)
     pass
 
 class FoositeAuth(FootsiteSession):
@@ -102,9 +102,6 @@ class FoositeAuth(FootsiteSession):
     def __init__(self, proxy, useragents,footstiteData):
         super().__init__(proxy, useragents)
         self.footsiteData:Footsite_CSV=footstiteData
-        
-    def footsiteRequest(self):
-        pass
 
     def authenticate(self):
         result=super().footsiteRequest(auth_url_champs, "POST", self.footsiteData.login_data(),200,"Succesfully Logged in!")
@@ -128,7 +125,7 @@ def parse_error(response):
     return val
 
 
-def return_result(succes_code: int, respone, text: str):
+def returnState(succes_code: int, respone, text: str):
 
     status_code = respone.status_code
     if status_code == succes_code:
