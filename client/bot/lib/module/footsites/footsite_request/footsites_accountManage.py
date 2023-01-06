@@ -37,6 +37,11 @@ class FoostiteConfirmAccount(FootsiteSession):
     pass
 
 class FoostiteRenameAccount(FoositeAuth):
+    """This class is a subclass of the FoositeAuth class. It takes in the same parameters as the
+FoositeAuth class, but also takes in an account object. It then uses the account object to make a
+POST request to the account_url
+
+    """
     def __init__(self, proxy, useragents, footstiteData,account:Footsite_CSV):
         super().__init__(proxy, useragents, footstiteData)
         self.account=account
@@ -46,12 +51,21 @@ class FoostiteRenameAccount(FoositeAuth):
     pass
 
 class FoostiteIds(FoositeAuth):
+    """This class inherits from the FoositeAuth class and uses the moduleRequest method to make a request
+to the accountInfo_url and returns the response
+
+    """
     
     def moduleRequest(self):
         return super().moduleRequest(accountInfo_url, "GET", None, 200,"Ids Gathered And Saved!")
     pass
 
 class FoostiteResendToken(FoositeAuth):
+    """This class is a subclass of the FoositeAuth class. It inherits the moduleRequest method from the
+FoositeAuth class. It overrides the moduleRequest method by calling the superclass's moduleRequest
+method and passing in the resentCode_url, "POST", self.footsiteData.tokenData(), 200, "Token Resent
+To Email" arguments
+    """
     def moduleRequest(self):
         return super().moduleRequest(resentCode_url, "POST", self.footsiteData.tokenData(), 200, "Token Resent To Email")
     pass
