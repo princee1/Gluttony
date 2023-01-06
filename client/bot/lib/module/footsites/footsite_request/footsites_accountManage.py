@@ -10,7 +10,9 @@ accountInfo_url = 'https://www.champssports.ca/api/v4/users/account-info'
 
 
 class FoostiteCreateAccount(FootsiteSession):
-    
+    """This class is a subclass of the FootsiteSession class, and it's purpose is to create an account on
+the Footsite
+    """
     def __init__(self, proxy, useragents,account):
         super().__init__(proxy, useragents)
         self.account:FootsiteAccount = account
@@ -20,7 +22,9 @@ class FoostiteCreateAccount(FootsiteSession):
     pass
 
 class FoostiteConfirmAccount(FootsiteSession):
-  
+    """This class is used to confirm the account by sending a POST request to the activation link with the
+activation token as the payload
+    """
     def __init__(self, proxy, useragents,token):
         super().__init__(proxy, useragents)
         self.acctoken=token
