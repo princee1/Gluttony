@@ -14,7 +14,10 @@ MAP_ERROR= {
     429: "Too Many Request",
     503: "First byte timeout"
 }
+
 class RequestState(Enum):
+    """A class that defines the states of a request.
+    """
     INIT=0,
     ERROR=1,
     SUCCESS=2,
@@ -34,9 +37,6 @@ class Requestable(Session):
     
     def rotateProxies(self,proxy):
         self.proxies=proxy
-        pass
-    
-    def start(self):
         pass
     
     def moduleRequest(self,url,method,data,successCode,succesText):
@@ -111,9 +111,6 @@ class Requestable(Session):
             return True, text
         else:
             return False, self.parse_error(respone)
-    
-    def restart(self):
-        pass
     
     def end(self):
     
