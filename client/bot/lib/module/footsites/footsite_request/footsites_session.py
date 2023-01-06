@@ -1,9 +1,9 @@
 from urllib.request import proxy_bypass
 from client.bot.lib.util.proxyManager.proxie_parser import Proxy
-from util.taskmanager.requestable_interface import Requestable,map_statusCode_error as MAP_ERROR,RequestState
+from util.taskmanager.requestable_interface import Requestable,RequestState
 import headers_gen as hg
 from enum import Enum
-from common.footsties_csvData import Footsite_CSV
+from common.footsties_csvData import Footsite_Account_CSV
 
 # TODO: completer l'objet footsite session
 datadome_url = "https://api-js.datadome.co/js/"
@@ -113,7 +113,7 @@ class FoositeAuth(FootsiteSession):
         :param footstiteData: This is the Footsite_CSV class that we created earlier
         """
         super().__init__(proxy, useragents)
-        self.footsiteData:Footsite_CSV=footstiteData
+        self.footsiteData:Footsite_Account_CSV=footstiteData
         
     def authenticate(self):
         """
