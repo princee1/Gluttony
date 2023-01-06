@@ -5,6 +5,7 @@ from footsites_session import Footsite_CSV
 account_url = "https://www.champssports.ca/api/v4/users"
 activation_link = "https://www.champssports.ca/api/v4/activation"
 resentCode_url = 'https://www.champssports.ca/api/v4/users/activation/resend-code'
+accountInfo_url = 'https://www.champssports.ca/api/v4/users/account-info'
 
 
 
@@ -44,12 +45,13 @@ class FoostiteRenameAccount(FoositeAuth):
         return super().moduleRequest(account_url, "POST", self.account.login_data(), 201, "Name Changed and Saved")
     pass
 
-
 class FoostiteIds(FoositeAuth):
     
+    def moduleRequest(self):
+        return super().moduleRequest(accountInfo_url, "GET", None, 200,"Ids Gathered And Saved!")
     pass
 
 class FoostiteResendToken(FoositeAuth):
-    def moduleRequest(self, url, method, data, successCode, succesText):
-        return super().moduleRequest(url, method, data, successCode, succesText)
+    def moduleRequest(self):
+        return super().moduleRequest(resentCode_url, "POST", self.footsiteData.tokenData(), 200, "Token Resent To Email")
     pass
