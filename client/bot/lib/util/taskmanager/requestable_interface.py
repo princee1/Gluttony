@@ -36,6 +36,11 @@ class Requestable(Session):
         pass
     
     def rotateProxies(self,proxy):
+        """
+        It takes a list of proxies and sets the class variable proxies to the list of proxies.
+        
+        :param proxy: A list of proxies to use
+        """
         self.proxies=proxy
         pass
     
