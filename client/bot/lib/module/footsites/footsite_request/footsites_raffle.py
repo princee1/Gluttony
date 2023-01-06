@@ -1,10 +1,15 @@
 from footsites_session import FootsiteSession
 
-class FoositeRaffleSku():
+CITY_GEO={
+    
+}
+
+class FoositeRaffleSkus(FootsiteSession):
+    
     pass
 
-class FoositeRaffleStore():
+class FoositeRaffleStore(FootsiteSession):
     pass
 
-class FootsiteRaffleSize():
+class FootsiteRaffleSize(FootsiteSession):
     pass
