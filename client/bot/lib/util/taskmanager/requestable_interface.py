@@ -1,8 +1,11 @@
 ##TODO: Trouver des meilleurs nom de methodes
-from requests import Session
+from json import JSONDecodeError
+from ssl import SSLError
+from httpx import ProxyError
+from requests import ReadTimeout, Session
 from enum import Enum
 
-map_statusCode_error = {
+MAP_ERROR= {
     403: "Captcha Found",
     400: "Request Error",
     418: "Teapot error",
@@ -22,14 +25,17 @@ class RequestState(Enum):
     pass
 
 class Requestable(Session):
+    
     def __init__(self,proxy,useragents):  
         self.proxies=proxy.proxy()
         self.useragents=useragents
         self.state:RequestState
         pass
+    
     def rotateProxies(self,proxy):
         self.proxies=proxy
         pass
+    
     def start(self):
         pass
     
@@ -65,15 +71,53 @@ class Requestable(Session):
         pass
         self.response=response
         del response
-        return returnState(successCode,self.response,succesText)
+        return self.returnState(successCode,self.response,succesText)
     
     def authenticate(self) -> None:
         pass
     
-    def restart():
+    def parse_error(self):
+        """
+        If the response is 400, return the error message from the response. Otherwise, return the error
+        message from the MAP_ERROR dictionary
+        
+        :param response: The response object from the request
+        :return: The response object
+        """
+        val = MAP_ERROR.get(self.response.status_code)
+        try:
+            return self.parse_error(val)
+        except:
+            pass
+        return val
+
+    def parse_error(self, val):
         pass
+
+    def returnState(self,succes_code: int, respone, text: str):
+        """
+        If the status code of the response is equal to the success code, return True and the text, otherwise
+        return False and the parsed error
+        
+        :param succes_code: The HTTP status code that indicates success
+        :type succes_code: int
+        :param respone: The response from the API
+        :param text: The text to be sent to the user
+        :type text: str
+        :return: A tuple of two values.
+        """
+        status_code = respone.status_code
+        if status_code == succes_code:
+            return True, text
+        else:
+            return False, self.parse_error(respone)
+    
+    def restart(self):
+        pass
+    
     def end(self):
     
         pass
      
     pass
+
