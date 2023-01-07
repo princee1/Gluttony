@@ -1,6 +1,6 @@
 from footsites_session import FootsiteSession,FoositeAuth
-from common.footsites_account import FootsiteAccount
-from footsites_session import Footsite_CSV
+from common.footsites_account import FootsiteAccount,FoostiteActivationToken
+
 
 account_url = "https://www.champssports.ca/api/v4/users"
 activation_link = "https://www.champssports.ca/api/v4/activation"
@@ -19,6 +19,11 @@ the Footsite
     
     def moduleRequest(self):
         return super().moduleRequest(account_url, "POST", self.account.to_json(), 201, "Account Sucessfully Created !")
+    
+    def end(self):
+        self.account.appendToFile()
+        pass
+    
     pass
 
 class FoostiteConfirmAccount(FootsiteSession):
@@ -27,7 +32,7 @@ activation token as the payload
     """
     def __init__(self, proxy, useragents,token):
         super().__init__(proxy, useragents)
-        self.acctoken=token
+        self.acctoken:FoostiteActivationToken=token
     
     def moduleRequest(self):
         values= super().moduleRequest(activation_link, "POST", self.acctoken.to_json(), 200, "Account Succesfully Confirmed")
@@ -38,6 +43,10 @@ activation token as the payload
             pass
         return values
     
+    def end(self):
+        self.acctoken.deleteActivated()
+        pass
+    
     pass
 
 class FoostiteRenameAccount(FoositeAuth):
@@ -46,7 +55,7 @@ FoositeAuth class, but also takes in an account object. It then uses the account
 POST request to the account_url
 
     """
-    def __init__(self, proxy, useragents, footstiteData,account:Footsite_CSV):
+    def __init__(self, proxy, useragents, footstiteData,account:Footsite):
         super().__init__(proxy, useragents, footstiteData)
         self.account=account
     
