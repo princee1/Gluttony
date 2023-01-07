@@ -1,5 +1,5 @@
 import re
-from text_interface import file_to_list
+from text_interface import file_to_list,deleteElement_inFile
 from urllib.parse import unquote
 from json_interface import Settings
 
@@ -46,7 +46,11 @@ class ActivationToken:
         self.token:str = token
 
     def to_json(self):
-        return {"activationToken": self.token}
-
+        pass
+    
     def __repr__(self) -> str:
         return self.token
+
+    def deleteActivated(self,file):
+        deleteElement_inFile(self.token,file)
+        pass
