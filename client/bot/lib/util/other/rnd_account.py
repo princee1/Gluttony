@@ -3,6 +3,7 @@ from util.fileInterface.text_interface import file_to_list
 from file_manager import commonFilePath
 from constant import names,domain,rnd_lname,rnd_fname
 from random import choice
+from util.fileInterface.csv_interface import appendAccount_csv
 
 rnd_lastName = file_to_list(commonFilePath(rnd_lname))
 rnd_firstName = file_to_list(commonFilePath(rnd_fname))
@@ -60,6 +61,10 @@ class Account:
         self.birthday = gen_birthday(birthdatType)
 
     def to_json(self):
+        pass
+    
+    def appendToFile(self,file):
+        appendAccount_csv(file,self.writeInFile())
         pass
 
     def writeInFile(self):
