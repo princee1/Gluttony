@@ -1,4 +1,7 @@
 from util.other.rnd_account import Account,BirthFormat
+from util.fileInterface.file_manager import footsitePath
+ACCOUNT_FILE:str = footsitePath("Account.csv")
+
 
 class FootsiteAccount(Account):
     def __init__(self, firstName, lastName):
@@ -15,3 +18,5 @@ class FootsiteAccount(Account):
             "wantToBeVip": False
         }
     
+    def appendToFile(self):
+        return super().appendToFile(ACCOUNT_FILE)
