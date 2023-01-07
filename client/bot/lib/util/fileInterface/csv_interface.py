@@ -45,6 +45,11 @@ class CSVData:
 
     def __eq__(self, __o: object) -> bool:
         return self.email == __o.__repr__()
+    
+    def updateName(self,file,fname,lname):
+        self.lname=lname
+        self.fname=fname
+        updateName(file,self)
 
     pass
 
