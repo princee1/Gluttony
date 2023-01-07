@@ -38,7 +38,7 @@ class Footsite_Account_CSV(Footsite_CSV):
             self.customerID=data[4]
             self.cCore=data[6]    
             
-    def change_name(self,first, last):
+    def updateName(self,first, last):
         super().updateName(ACCOUNT_FILE,first, last)
         pass
     
