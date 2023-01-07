@@ -46,6 +46,10 @@ class CSVData:
     def __eq__(self, __o: object) -> bool:
         return self.email == __o.__repr__()
     
+    def updateValue(self,file,*args):
+        updateValue(file,args)
+        pass
+    
     def updateName(self,file,fname,lname):
         self.lname=lname
         self.fname=fname
@@ -102,7 +106,7 @@ def appendAccount_csv(file,data: tuple):
         writer = csv.writer(csvAccount)
         writer.writerow(data)
         
-def updateValue(file,data:CSVData,):
+def updateValue(file,*args):
     """
     It takes a file, a data object, and updates the file with the data object
     
@@ -116,7 +120,7 @@ def updateValue(file,data:CSVData,):
     #TODO le rendre plus general
     #sheet[index,"CustomerID"]=data.customerID
     #sheet[index,"CCore"]=data.cCore
-    saveFile(sheet,data)
+    saveFile(sheet,file)
     pass
 
 def updateName(file,data:CSVData):
