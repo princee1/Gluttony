@@ -24,6 +24,7 @@ class RequestState(Enum):
     PROXY_ERROR=3,
     RETRY=4,
     AUTHENTIFICATE=5,
+    DONE=6
     
     pass
 
