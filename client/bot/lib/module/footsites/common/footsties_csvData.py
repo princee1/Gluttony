@@ -42,6 +42,10 @@ class Footsite_Account_CSV(Footsite_CSV):
         super().updateName(ACCOUNT_FILE,first, last)
         pass
     
+    def updateIds(self,*args):
+        super().updateValue(ACCOUNT_FILE,args)
+        pass
+    
     def save(self):
         pass
     
