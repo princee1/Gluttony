@@ -1,9 +1,10 @@
 from util.fileInterface.csv_interface import CSVData,ListBuilder
 import util.fileInterface.csv_interface as csvi
+from util.fileInterface.file_manager import footsitePath
 
-ACCOUNT_FILE:str
-ENTRIES_FILE:str
-WINS_FILE:str
+ACCOUNT_FILE:str = footsitePath("Account.csv")
+ENTRIES_FILE:str = lambda sku:footsitePath(f"Entries/{sku}.csv")
+WINS_FILE:str =  lambda sku:footsitePath(f"Win/{sku}.csv")
 
 
 class Footsite_CSV(CSVData): 
@@ -38,7 +39,9 @@ class Footsite_Account_CSV(Footsite_CSV):
             self.cCore=data[6]    
             
     def change_name(self,first, last):
+        super().updateName(ACCOUNT_FILE,first, last)
         pass
+    
     def save(self):
         pass
     
