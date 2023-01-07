@@ -2,7 +2,7 @@
 from json import JSONDecodeError
 from ssl import SSLError
 from httpx import ProxyError
-from requests import ReadTimeout, Session
+from requests import ReadTimeout, Session,Response
 from enum import Enum
 
 MAP_ERROR= {
@@ -23,7 +23,7 @@ class RequestState(Enum):
     SUCCESS=2,
     PROXY_ERROR=3,
     RETRY=4,
-    NEXT=5,
+    AUTHENTIFICATE=5,
     
     pass
 
@@ -99,7 +99,7 @@ class Requestable(Session):
     def parse_error(self, val):
         pass
 
-    def returnState(self,succes_code: int, respone, text: str):
+    def returnState(self,succes_code: int, respone:Response, text: str):
         """
         If the status code of the response is equal to the success code, return True and the text, otherwise
         return False and the parsed error
