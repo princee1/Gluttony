@@ -1,6 +1,17 @@
 from util.other.rnd_account import Account,BirthFormat
 from util.fileInterface.file_manager import footsitePath
+from service.email.link_grabber import ActivationToken
+
 ACCOUNT_FILE:str = footsitePath("Account.csv")
+ACITVATION_FILE:str =footsitePath("ActivationToken.txt")
+
+class FoostiteActivationToken(ActivationToken):
+    
+    def to_json(self):
+        return {"activationToken": self.token}
+    
+    def deleteActivated(self):
+        return super().deleteActivated(ACITVATION_FILE)
 
 
 class FootsiteAccount(Account):
