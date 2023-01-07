@@ -106,7 +106,7 @@ def appendAccount_csv(file,data: tuple):
         writer = csv.writer(csvAccount)
         writer.writerow(data)
         
-def updateValue(file,*args):
+def updateValue(file,data,*args):
     """
     It takes a file, a data object, and updates the file with the data object
     
