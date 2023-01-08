@@ -129,5 +129,14 @@ class Requestable(Session):
 
         pass
      
+    def setState(self,state:RequestState):
+        """
+        The function takes a state object and sets the state of the request to that state
+        
+        :param state: The current state of the request
+        :type state: RequestState
+        """
+        self.state=state
+        
     pass
 
