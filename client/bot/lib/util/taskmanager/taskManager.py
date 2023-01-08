@@ -6,6 +6,7 @@ from taskCommunication import *
 MAX_ALIVE_TRHEAD=50
 N=1
 commSem=BoundedSemaphore(N)
+manEvent = PEvent()
 
 
 class Task(Thread):
@@ -39,10 +40,11 @@ class Task(Thread):
     def end(self):
         pass
     
-    def communicate(self):
+    def communicate(self,commType):
         commSem.acquire()
-        
-        
+        manEvent.set(commType)
+        self.cEvent.wait()
+        message = self.cEvent.message
         pass
     
     def __repr__(self) -> str:
