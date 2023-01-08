@@ -84,8 +84,16 @@ class TaskManager():
     def treatComm(self,index):
 
         with manEvent.commMessage as cm:
-            pass #treating
+            if cm.type==CommType.PROXY:
+                pass
+            elif cm.type==CommType.PROXY_FLAG: 
+                pass
+            #treating the commMessage
+            pass 
         self.eventList[index].set()
+        pass
+    
+    def flagProcess():
         pass
     
     pass
