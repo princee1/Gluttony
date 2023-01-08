@@ -8,9 +8,6 @@ class CommType(Enum):
 class Message():
     pass
 
-class CEvent(Event):
-    
-    pass
 
 class PEvent(Event):
     
