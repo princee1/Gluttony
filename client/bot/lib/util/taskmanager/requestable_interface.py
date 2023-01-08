@@ -23,7 +23,8 @@ class RequestState(Enum):
     SUCCESS=2,
     PROXY_ERROR=3,
     RETRY=4,
-    AUTHENTIFICATE=5,
+    AUTHENTICATED=5,
+    PAUSE=5,
     DONE=6
     
     pass
