@@ -22,7 +22,7 @@ class RequestState(Enum):
     ERROR=1,
     SUCCESS=2,
     PROXY_ERROR=3,
-    RETRY=4,
+    READY=4,
     AUTHENTICATED=5,
     PAUSE=5,
     DONE=6
@@ -34,7 +34,7 @@ class Requestable(Session):
     def __init__(self,proxy,useragents):  
         self.proxies=proxy.proxy()
         self.useragents=useragents
-        self.state:RequestState
+        self.state:RequestState=RequestState.INIT
         pass
     
     def rotateProxies(self,proxy):
