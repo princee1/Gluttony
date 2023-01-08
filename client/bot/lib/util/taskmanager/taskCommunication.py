@@ -30,7 +30,7 @@ class PEvent(Event):
     
     def __init__(self):
         super().__init__()
-        self.commMessage=None
+        self.commMessage:CommMessage=None
     
     def set(self,index,commMessage):
         super().set()
