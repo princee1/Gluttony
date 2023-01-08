@@ -1,9 +1,11 @@
-from requestable_interface import Requestable
+from requestable_interface import Requestable,RequestState
 from threading import Semaphore,BoundedSemaphore,Thread,Event
 
 
 MAX_ALIVE_TRHEAD=50
 N=1
+commSem=BoundedSemaphore(N)
+
 
 class Task(Thread):
     def __init__(self,request:Requestable,index:int,semOut,semData):
@@ -14,15 +16,30 @@ class Task(Thread):
         self.semData=semData
         
     def  run(self):
-        pass
-    
-    def request(self):
+        
+        while self.request.state != RequestState.DONE or self.request.state != RequestState.ERROR:
+            
+            if self.request.state == RequestState.INIT:
+                pass
+            elif self.request.state == RequestState.AUTHENTICATED:
+                pass
+            elif self.request.state == RequestState.PROXY_ERROR:
+                pass
+            elif self.request.state == RequestState.SUCCESS:
+                pass
+            elif self.request.state == RequestState.PAUSE:
+                pass
+            
+            pass
+        
         pass
     
     def end(self):
         pass
     
     def communicate(self):
+        
+        
         pass
     
     def __repr__(self) -> str:
