@@ -82,6 +82,9 @@ class Requestable(Session):
     def authenticate(self) -> None:
         pass
     
+    def init(self):
+        pass
+    
     def parse_error(self):
         """
         If the response is 400, return the error message from the response. Otherwise, return the error
