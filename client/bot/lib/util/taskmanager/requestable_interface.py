@@ -81,6 +81,9 @@ class Requestable(Session):
         return self.returnState(successCode,self.response,succesText)
     
     def authenticate(self) -> None:
+        """
+        Authenticate the user to the site
+        """
         pass
     
     def init(self):
@@ -123,7 +126,7 @@ class Requestable(Session):
             return False, self.parse_error(respone)
     
     def end(self):
-    
+
         pass
      
     pass

@@ -41,6 +41,14 @@ class Task(Thread):
         pass
     
     def communicate(self,commMessage:CommMessage):
+        """
+        The function waits for an availability from the manager, then sends a message to the manager, then
+        waits for a response from the manager, then returns the response
+        
+        :param commMessage: This is the message that the manager is sending to the worker
+        :type commMessage: CommMessage
+        :return: The message that was sent to the manager.
+        """
         commSem.acquire()
         manEvent.set(commMessage)
         self.cEvent.wait()
@@ -67,12 +75,19 @@ class TaskManager():
         pass
     
     def waitThreads(self):
+        """
+        It waits for all the threads to finish before continuing
+        """
         for t in self.taskList:
             t.join()
         
         pass
     
     def communicate(self):
+        """
+        The function waits for the event to be set, then it gets the index of the event, treats the
+        communication, clears the event and releases the semaphore
+        """
         
         manEvent.wait()
         index=manEvent.index
@@ -82,6 +97,11 @@ class TaskManager():
         pass
     
     def treatComm(self,index):
+        """
+        It takes a commMessage, treats it, and then sets the event that was waiting for it
+        
+        :param index: the index of the event in the eventList
+        """
 
         with manEvent.commMessage as cm:
             if cm.type==CommType.PROXY:

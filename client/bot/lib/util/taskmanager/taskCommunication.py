@@ -11,7 +11,11 @@ class CommMessage():
 class Message():
     pass
 
+
 class CEvent(Event):
+    """The CEvent class is a subclass of the Event class. It has an index and a message. The index is used
+to identify the event. The message is used to pass data to the event handler
+    """
     def __init__(self,index) -> None:
         super().__init__()
         self.index=index
