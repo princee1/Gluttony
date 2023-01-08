@@ -16,7 +16,7 @@ class Task(Thread):
         self.index=index
         self.semOut=semOut
         self.semData=semData
-        self.cEvent=cEvent
+        self.cEvent:CEvent=cEvent
         
     def  run(self):
         
@@ -40,12 +40,13 @@ class Task(Thread):
     def end(self):
         pass
     
-    def communicate(self,commType):
+    def communicate(self,commMessage:CommMessage):
         commSem.acquire()
-        manEvent.set(commType)
+        manEvent.set(commMessage)
         self.cEvent.wait()
         message = self.cEvent.message
-        pass
+        self.cEvent.clear()
+        return message
     
     def __repr__(self) -> str:
         return super().__repr__()
@@ -72,6 +73,19 @@ class TaskManager():
         pass
     
     def communicate(self):
+        
+        manEvent.wait()
+        index=manEvent.index
+        self.treatComm(index)
+        manEvent.clear()
+        commSem.release(N)
+        pass
+    
+    def treatComm(self,index):
+
+        with manEvent.commMessage as cm:
+            pass #treating
+        self.eventList[index].set()
         pass
     
     pass
