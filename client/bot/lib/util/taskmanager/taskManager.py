@@ -1,5 +1,6 @@
 from requestable_interface import Requestable,RequestState
-from threading import Semaphore,BoundedSemaphore,Thread,Event
+#from threading import BoundedSemaphore,Thread
+from taskCommunication import *
 
 
 MAX_ALIVE_TRHEAD=50
@@ -8,12 +9,13 @@ commSem=BoundedSemaphore(N)
 
 
 class Task(Thread):
-    def __init__(self,request:Requestable,index:int,semOut,semData):
+    def __init__(self,request:Requestable,index:int,semOut,semData,cEvent):
         super().__init__(self,daemon=False)
         self.request = request
         self.index=index
         self.semOut=semOut
         self.semData=semData
+        self.cEvent=cEvent
         
     def  run(self):
         
@@ -38,6 +40,7 @@ class Task(Thread):
         pass
     
     def communicate(self):
+        commSem.acquire()
         
         
         pass
@@ -50,10 +53,12 @@ class Task(Thread):
 
 class TaskManager():
     
-    def __init__(self,taskList):
+    def __init__(self,taskList,eventList):
         self.taskList:list[Task] = taskList
-        self.eventList:list[Event]= []
+        self.eventList:list[Event]= eventList
+        self.activeTaskList:list[Task]=[]
         self.thradComm=Thread(target=self.communicate)
+    
     
     def start(self):
         pass
@@ -68,3 +73,4 @@ class TaskManager():
         pass
     
     pass
+
