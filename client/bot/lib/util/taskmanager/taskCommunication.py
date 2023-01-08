@@ -3,8 +3,11 @@ from enum import Enum
 
 class CommType(Enum):
     PROXY=0,
+    PROXY_FLAG=1
     pass
 
+class CommMessage():
+    pass
 class Message():
     pass
 
@@ -23,11 +26,11 @@ class PEvent(Event):
     
     def __init__(self):
         super().__init__()
-        self.commType=None
+        self.commMessage=None
     
-    def set(self,index,commType:CommType):
+    def set(self,index,commMessage):
         super().set()
         self.index=index
-        self.commType = commType
+        self.commMessage = commMessage
         pass
     pass
