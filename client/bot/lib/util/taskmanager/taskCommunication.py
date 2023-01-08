@@ -7,6 +7,11 @@ class CommType(Enum):
     pass
 
 class CommMessage():
+    def __init__(self,index,commType,params=None) -> None:
+        self.index = index
+        self.commType = commType
+        self.params=params
+        pass
     pass
 class Message():
     pass
@@ -32,9 +37,8 @@ class PEvent(Event):
         super().__init__()
         self.commMessage:CommMessage=None
     
-    def set(self,index,commMessage):
+    def set(self,commMessage):
         super().set()
-        self.index=index
         self.commMessage = commMessage
         pass
     pass
