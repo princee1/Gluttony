@@ -14,6 +14,12 @@ class CommMessage():
         pass
     pass
 class Message():
+    def __init__(self,value) -> None:
+        self.value=value
+        pass
+    
+    def __repr__(self) -> str:
+        return self.value
     pass
 
 
